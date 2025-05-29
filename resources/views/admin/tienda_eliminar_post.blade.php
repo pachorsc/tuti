@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Tuti</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.bunny.net">
+  <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+
+  <!-- Styles / Scripts -->
+  <script src="http://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="">
+  <header>
+    <x-menu></x-menu>
+  </header>
+  <main>
+    <h1 class="text-2xl text-center font-bold">Elige la tienda para eliminar el Post</h1>
+    <div class="flex flex-col items-center justify-center my-4">
+      <form action="/admin/eliminar_post_tienda" method="POST">
+        @csrf
+        <label for="tienda_id" class="mb-2">Selecciona una tienda:</label>
+        <select name="tienda_id" class="border rounded px-2 py-1 mb-4">
+          @foreach ($tiendas as $tienda)
+            <option value="{{ $tienda->id }}">{{ $tienda->nombre }}</option>
+          @endforeach
+        </select>
+        <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Elegir Tienda</button>
+      </form>
+    </div>
+</main>
+
+  <footer>
+    <x-footer></x-footer>
+  </footer>
+</body>
+
+</html>
