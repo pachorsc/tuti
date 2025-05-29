@@ -81,4 +81,13 @@ class User extends Authenticatable
 
         }
     }
+
+    public static function find($id)
+    {
+        // Buscar usuario por ID
+        return DB::table('usuario')
+            ->where('id', $id)
+            ->select('id', 'nombre', 'apellido', 'correo')
+            ->first();
+    }
 }

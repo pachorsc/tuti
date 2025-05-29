@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormularioController;
 use App\Http\Controllers\Blog_controller;
@@ -8,7 +7,7 @@ use App\Http\Controllers\Inicio_sesion_controller;
 use App\Http\Controllers\Tiendas_cercanas_controller;
 use App\Http\Controllers\admin_controller;
 use App\Http\Controllers\vendedor_controller;
-
+use App\Models\User;
 
 Route::get('/', function () {
     
@@ -99,3 +98,35 @@ Route::get('/cerrar_sesion', function () {
     }
     return redirect()->route('entrar');
 })->name('cerrar_sesion');
+
+Route::get('usuario/perfil', function () {
+    // Verificar si el usuario está autenticado
+    if (Cookie::get('usuario') == null) {
+        return redirect()->route('entrar');
+    }
+    // Obtener el ID del usuario desde la cookie
+    $id_usuario = Cookie::get('id_usuario');
+    //traemos nombre, apellido, correo   
+    $usuario = User::find($id_usuario);
+
+    return view('perfil', [
+        'usuario' => $usuario,
+    ]);
+
+})->name('ver_perfil');
+
+Route::get('usuario/editar', function () {
+    // Verificar si el usuario está autenticado
+    if (Cookie::get('usuario') == null) {
+        return redirect()->route('entrar');
+    }
+    // Obtener el ID del usuario desde la cookie
+    $id_usuario = Cookie::get('id_usuario');
+    //traemos nombre, apellido, correo   
+    $usuario = User::find($id_usuario);
+
+    return view('editar_perfil', [
+        'usuario' => $usuario,
+    ]);
+
+})->name('editar_perfil');
