@@ -10,7 +10,7 @@
         <a href="/usuario" class="border border-black px-4 py-1 bg-[#247BA0] hover:bg-[#1f6887]">Usuario</a>
         <a href="/cerrar_sesion?" class="border border-black px-4 py-1 bg-[#247BA0] hover:bg-[#1f6887]">Salir</a>
       @elseif (Cookie::get('vendedor'))
-        <a href="/usuario" class="border border-black px-4 py-1 bg-[#247BA0] hover:bg-[#1f6887]">Usuario</a>
+        <a href="/usuario/perfil" class="border border-black px-4 py-1 bg-[#247BA0] hover:bg-[#1f6887]">Usuario</a>
         <a href="/vendedor/tienda" class="border border-black px-4 py-1 bg-[#247BA0] hover:bg-[#1f6887]">Tienda</a>
 
         <a href="/cerrar_sesion?" class="border border-black px-4 py-1 bg-[#247BA0] hover:bg-[#1f6887]">Salir</a>

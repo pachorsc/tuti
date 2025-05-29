@@ -231,11 +231,11 @@ class vendedor_controller extends Controller
         ]);
         foreach ($request->elementos_seleccionados as  $value) {
             // Eliminar el elemento de la base de datos
-            Elemento::delete_elemento($request->input('elementos_seleccionados'));
+            Elemento::delete_elemento($value);
         }
 
         // Redirigir a la vista de eliminar elemento con un mensaje de éxito
-        return redirect('/vendedor/eliminar_elemento')->with('success', 'Elemento eliminado correctamente.');
+        return redirect('/vendedor/tienda')->with('success', 'Elemento(s) eliminado(s) correctamente.');
 
     }
 }

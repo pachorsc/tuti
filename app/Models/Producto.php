@@ -19,7 +19,7 @@ class Producto extends Model
         }
         // Guardar la imagen del servicio
         if ($producto->imagen) {
-
+            $producto->nombre = str_replace(' ', '_', $producto->nombre); // Reemplaza espacios por guiones bajos
             $nombreArchivo = 'producto_' . $producto->nombre . '.' . $producto->imagen->getClientOriginalExtension();
             $producto->imagen->move($carpeta_tienda, $nombreArchivo);
             $producto->imagen = 'images/tiendas/' . $tienda_nombre .'_'.$id_usuario. '/productos/' . $nombreArchivo;

@@ -17,12 +17,20 @@ class Elemento extends Model
     }
     static function delete_elemento($id_elemento)
     {
+        //tambien hay que eliminar la imagen del elemento en la carpeta de imagenes
+        $elemento_imagen = DB::table('elemento')
+            ->select('imagen')
+            ->where('id', $id_elemento)
+            ->first();
+
+     
+        if (file_exists($elemento_imagen->imagen)) {
+            unlink($elemento_imagen->imagen);
+        }
         //primero hay que eliminar segun de la tabla de servicios o productos
         // Intenta eliminar en ambas tablas, solo una tendrá el ID
         DB::table('servicio')->where('id', $id_elemento)->delete();
         DB::table('producto')->where('id', $id_elemento)->delete();
-
-        // Elimina el elemento principal
         // eliminar elemento
         DB::table('elemento')
             ->where('id', $id_elemento)

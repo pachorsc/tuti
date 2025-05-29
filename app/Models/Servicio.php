@@ -20,7 +20,7 @@ class Servicio extends Model
         }
         // Guardar la imagen del servicio
         if ($servicio->imagen) {
-
+            $servicio->nombre = str_replace(' ', '_', $servicio->nombre); // Reemplaza espacios por guiones bajos
             $nombreArchivo = 'servicio_' . $servicio->nombre . '.' . $servicio->imagen->getClientOriginalExtension();
             $servicio->imagen->move($carpeta_tienda, $nombreArchivo);
             $servicio->imagen = 'images/tiendas/' . $tienda_nombre .'_'.$id_usuario. '/servicios/' . $nombreArchivo;
