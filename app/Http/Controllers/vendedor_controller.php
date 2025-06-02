@@ -312,9 +312,6 @@ class vendedor_controller extends Controller
         }
         
         Elemento::update_elemento($request, $id_usuario, $is_producto);
-
-        
-
         // Redirigir a la vista de la tienda
         return redirect('/vendedor/tienda')->with('success', 'Elemento actualizado correctamente.');
     }
