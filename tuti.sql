@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-05-2025 a las 11:44:38
+-- Tiempo de generación: 02-06-2025 a las 09:48:29
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -276,7 +276,7 @@ CREATE TABLE `usuario` (
 INSERT INTO `usuario` (`id`, `fecha_creacion`, `nombre`, `correo`, `apellido`, `contrasena`) VALUES
 (1, '2025-05-20 06:07:50', 'Juan', 'prueba1@gmail.com', 'Rodríguez', '$2y$12$4Oo9PLFOj99jQCf9rRw9Y.gilQ6/86.bleGw4MphmFaMw.DNphEaa'),
 (2, '2025-05-20 08:26:15', 'admin', 'admin@admin.com', 'admin', '$2y$12$4Oo9PLFOj99jQCf9rRw9Y.gilQ6/86.bleGw4MphmFaMw.DNphEaa'),
-(3, '2025-05-20 06:27:23', 'Vendedor 1', 'vendedor1@gmail.com', 'uno', '$2y$12$vY/ft5x0VIqcR1PcIq5FCu144mug.WRiXglzHXM49/6KzQmxbrvZC'),
+(3, '2025-05-20 06:27:23', 'Vendedor cambio', 'vendedor1@gmail.com', 'dos', '$2y$12$/yoNqcIia8dDvqel/bidhu1ZJWq/BlmW6SvQyVmqw9uul/LRPzSha'),
 (4, '2025-05-20 06:34:23', 'Vendedor 2', 'vendedor2@gmail.com', 'dos', '$2y$12$4HuFtIrg8MFEhQgi6JGZgu7KuEeYluANr30wFcX4jGgv9b2AfHGMK'),
 (5, '2025-05-20 06:44:41', 'Vendedor 3', 'vendedor3@gmail.com', 'tres', '$2y$12$NrEONAFmaGut0MLd3O5GLesCUECiVpbv5p9Nt9tOehjG7aLnxKXMS');
 

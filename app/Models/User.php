@@ -90,4 +90,26 @@ class User extends Authenticatable
             ->select('id', 'nombre', 'apellido', 'correo')
             ->first();
     }
+
+    public static function update_usuario($id, $nombre, $apellido, $correo, $contrasena)
+    {
+        if($contrasena == null || $contrasena == '') {
+            // Si la contraseña es nula o vacía, no la actualizamos
+            $contrasena = DB::table('usuario')
+                ->where('id', $id)
+                ->value('contrasena'); // Obtener la contraseña actual
+        } else {
+            // Si se proporciona una nueva contraseña, la actualizamos
+            $contrasena = Hash::make($contrasena); // Hacemos la encriptacion de la nueva contraseña
+        }
+        // Actualizar el usuario
+        DB::table('usuario')
+            ->where('id', $id)
+            ->update([
+                'nombre' => $nombre,
+                'apellido' => $apellido,
+                'correo' => $correo,
+                'contrasena' => $contrasena
+            ]);
+    }
 }

@@ -11,6 +11,7 @@ use App\Models\Post;
 use App\Models\Servicio;
 use App\Models\Producto;
 use App\Models\Elemento;
+use Illuminate\Support\Facades\DB;
 
 
 class vendedor_controller extends Controller
@@ -170,11 +171,13 @@ class vendedor_controller extends Controller
         return redirect('/vendedor/tienda')->with('success', 'Post creado correctamente.');
     }
 
-    function nuevo_servicio() {
+    function nuevo_servicio()
+    {
         return view('dueno.nuevo_servicio');
     }
 
-    function insert_servicio(Request $request) {
+    function insert_servicio(Request $request)
+    {
         // Validar los datos del formulario
         $request->validate([
             'nombre' => 'required|string|max:255',
@@ -192,10 +195,12 @@ class vendedor_controller extends Controller
         return redirect('/vendedor/tienda')->with('success', 'Servicio creado correctamente.');
     }
 
-    function nuevo_producto(){
+    function nuevo_producto()
+    {
         return view('dueno.nuevo_producto');
     }
-    function insert_producto(Request $request) {
+    function insert_producto(Request $request)
+    {
         // Validar los datos del formulario
         $request->validate([
             'nombre' => 'required|string|max:255',
@@ -213,29 +218,104 @@ class vendedor_controller extends Controller
         return redirect('/vendedor/tienda')->with('success', 'Producto creado correctamente.');
     }
 
-    function eliminar_elemento() {
+    function eliminar_elemento()
+    {
         //sacamos la lista de elementos que tiene la tienda
         $id_usuario = Cookie::get('id_usuario');
         $tienda_vendedor = Usuario_dueno::get_tienda($id_usuario);
 
-       
+
 
         $elementos = Elemento::get_elementos_tienda($tienda_vendedor->tienda);
         return view('dueno.eliminar_elemento')->with('elementos', $elementos);
     }
 
-    function detete_elemento(Request $request) {
+    function detete_elemento(Request $request)
+    {
         // Validar el ID del elemento
         $request->validate([
             'elementos_seleccionados' => 'required|exists:elemento,id',
         ]);
-        foreach ($request->elementos_seleccionados as  $value) {
+        foreach ($request->elementos_seleccionados as $value) {
             // Eliminar el elemento de la base de datos
             Elemento::delete_elemento($value);
         }
 
         // Redirigir a la vista de eliminar elemento con un mensaje de éxito
         return redirect('/vendedor/tienda')->with('success', 'Elemento(s) eliminado(s) correctamente.');
+    }
 
+    function editar_elemento()
+    {
+        //sacamos la lista de elementos que tiene la tienda
+        $id_usuario = Cookie::get('id_usuario');
+        $tienda_vendedor = Usuario_dueno::get_tienda($id_usuario);
+
+        $elementos = Elemento::get_elementos_tienda($tienda_vendedor->tienda);
+        return view('dueno.editar_elemento')->with('elementos', $elementos);
+    }
+
+    function editar_elemento_form($elemento_id)
+    {
+        // Validar el ID del elemento
+        $elemento = Elemento::get_elemento($elemento_id);
+        if (!$elemento) {
+            return redirect('/vendedor/tienda')->with('error', 'Elemento no encontrado.');
+        }
+        // Verificar si el elemento es un producto o un servicio y hacer join para obtener todos los datos
+        if (DB::table('producto')->where('id', $elemento->id)->exists()) {
+            $es_producto = true;
+            $elemento = DB::table('elemento')
+                ->join('producto', 'elemento.id', '=', 'producto.id')
+                ->select('elemento.*', 'producto.cantidad', 'producto.color')
+                ->where('elemento.id', $elemento_id)
+                ->first();
+        } else {
+            $es_producto = false;
+            $elemento = DB::table('elemento')
+                ->join('servicio', 'elemento.id', '=', 'servicio.id')
+                ->select('elemento.*', 'servicio.horario_disp')
+                ->where('elemento.id', $elemento_id)
+                ->first();
+        }
+        
+
+        return view('dueno.editar_elemento_form', compact('elemento', 'es_producto'));
+
+    }
+
+    function update_elemento(Request $request)
+    {
+        $id_usuario = Cookie::get('id_usuario');
+        $is_producto = $request->has('cantidad');
+
+        // Validar los datos del formulario segun si es producto o servicio
+        if ($is_producto) {
+            // Es un producto
+            $request->validate([
+                'nombre' => 'required|string|max:255',
+                'descripcion' => 'required|string',
+                'precio' => 'required|string',
+                'imagen' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'cantidad' => 'required|integer|min:1',
+                'color' => 'nullable|string|max:255',
+            ]);
+        } else {
+            // Es un servicio
+            $request->validate([
+                'nombre' => 'required|string|max:255',
+                'descripcion' => 'required|string',
+                'precio' => 'required|string',
+                'imagen' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'horario_disp' => 'required|string',
+            ]);
+        }
+        
+        Elemento::update_elemento($request, $id_usuario, $is_producto);
+
+        
+
+        // Redirigir a la vista de la tienda
+        return redirect('/vendedor/tienda')->with('success', 'Elemento actualizado correctamente.');
     }
 }

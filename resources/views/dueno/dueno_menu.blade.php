@@ -40,6 +40,9 @@
               <a href="/vendedor/editar_tienda">Editar Tienda</a>
           </li>
           <li class="text-2xl font-bold border-b-2 border-gray-300 hover:bg-gray-200">
+            <a href="/vendedor/editar_elemento">Editar Elemento</a>
+          </li>
+          <li class="text-2xl font-bold border-b-2 border-gray-300 hover:bg-gray-200">
           <a href="/vendedor/hacer_post">Hacer un Post</a>
           </li>
           <li class="text-2xl font-bold border-b-2 border-gray-300 hover:bg-gray-200">

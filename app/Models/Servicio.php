@@ -48,4 +48,13 @@ class Servicio extends Model
         ]);
 
     }
+    public static function update_servicio($servicio)
+    {
+        DB::table('servicio')
+            ->where('id', $servicio->id)
+            ->update([
+                'horario_disp' => $servicio->horario_disp,
+            ]);
+            
+    }
 }

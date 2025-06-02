@@ -10,7 +10,6 @@ use App\Http\Controllers\vendedor_controller;
 use App\Models\User;
 
 Route::get('/', function () {
-    
     return view('welcome');
 })->name('inicio');
 
@@ -23,7 +22,7 @@ Route::get('/admin', function () {
 
 
 // Rutas para el controlador admin
-Route::match(['get', 'post'], '/admin/{action}', function($action, \Illuminate\Http\Request $request) {
+Route::match(['get', 'post'], '/admin/{action}', function ($action, \Illuminate\Http\Request $request) {
     // Verificar si el usuario es admin
     if (Cookie::get('admin') !== 'true') {
         return redirect()->route('inicio');
@@ -37,7 +36,13 @@ Route::match(['get', 'post'], '/admin/{action}', function($action, \Illuminate\H
 })->name('admin_action');
 
 // Rutas para el vendedor
-Route::match(['get', 'post'], '/vendedor/{action}', function($action, \Illuminate\Http\Request $request) {
+Route::get('/vendedor/editar_elemento/{id}', [vendedor_controller::class, 'editar_elemento_form'])
+    ->name('editar_elemento_form');
+
+Route::post('/vendedor/update_elemento/{id}', [vendedor_controller::class, 'update_elemento'])
+    ->name('update_elemento');
+
+Route::match(['get', 'post'], '/vendedor/{action}', function ($action, \Illuminate\Http\Request $request) {
     // Verificar si el usuario es admin
     if (Cookie::get('vendedor') !== 'true') {
         return redirect()->route('inicio');
@@ -69,20 +74,17 @@ Route::get('/blog/{id}', [Blog_controller::class, 'traer_post']);
 Route::get('/blog/categoria/{categoria}', [Blog_controller::class, 'traer_posts_categoria']);
 
 Route::get('/registro', function () {
-    if (Cookie::get('usuario') != null) {
-        return redirect()->route('inicio');
-    }
+
     return view('registro');
 });
-Route::post('/registrar', [Registro_controlador::class,'store'])->name('registrar');
+Route::post('/registrar', [Registro_controlador::class, 'store'])->name('registrar');
 
 Route::get('/entrar', function () {
-    if (Cookie::get('usuario') != null) {
-        return redirect()->route('inicio');
-    }
+
     return view('entrar');
 })->name('entrar');
-Route::post('/inicio_sesion', [Inicio_sesion_controller::class,'iniciar_sesion'])->name('inicio_sesion');
+Route::post('/inicio_sesion', [Inicio_sesion_controller::class, 'iniciar_sesion'])->name('inicio_sesion');
+
 
 Route::get('/cerrar_sesion', function () {
     // Lista de todas las cookies que quieres eliminar
@@ -98,6 +100,7 @@ Route::get('/cerrar_sesion', function () {
     }
     return redirect()->route('entrar');
 })->name('cerrar_sesion');
+
 
 Route::get('usuario/perfil', function () {
     // Verificar si el usuario está autenticado
@@ -130,3 +133,39 @@ Route::get('usuario/editar', function () {
     ]);
 
 })->name('editar_perfil');
+
+Route::Post('usuario/update', function () {
+    // Verificar si el usuario está autenticado
+    if (Cookie::get('usuario') == null) {
+        return redirect()->route('entrar');
+    }
+    // Verificar si se ha enviado el formulario
+
+    // Validar los datos del formulario
+    $data = request()->validate([
+        'nombre' => 'required|string|max:255',
+        'apellido' => 'required|string|max:255',
+        'correo' => 'required|email|max:255',
+        'contrasena' => 'nullable|string|min:8',
+    ]);
+
+    // Obtener el ID del usuario desde la cookie
+    $id_usuario = Cookie::get('id_usuario');
+
+    if (!empty($data['contrasena'])) {
+        $contrasena = bcrypt($data['contrasena']);
+    }
+
+    // Obtener el ID del usuario desde la cookie
+    $id_usuario = Cookie::get('id_usuario');
+    //hacemos el update del usuario
+
+    User::update_usuario($id_usuario, $data['nombre'], $data['apellido'], $data['correo'], $data['contrasena']);
+
+
+    $usuario = User::find($id_usuario);
+    return view('perfil', [
+        'usuario' => $usuario,
+    ]);
+
+})->name('update_perfil');

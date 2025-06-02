@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class Producto extends Model
 {
-    static public function insert_servicio($producto, $id_usuario) {
+    static public function insert_servicio($producto) {
          //hay que guardar las imagenes en la carpeta de la tienda, si no existe se crea la carpeta
         $tienda_nombre = Tienda::get_tienda($id_usuario)->nombre;
         
@@ -46,4 +46,12 @@ class Producto extends Model
             'cantidad' => $producto->cantidad,
         ]);
     } 
+    static public function update_producto($producto) {
+        DB::table('producto')
+                    ->where('id', $producto->id)
+                    ->update([
+                        'cantidad' => $producto->cantidad,
+                        'color' => $producto->color,
+                    ]);
+    }
 }
