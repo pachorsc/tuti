@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 
 class Producto extends Model
 {
     static public function insert_servicio($producto) {
-         //hay que guardar las imagenes en la carpeta de la tienda, si no existe se crea la carpeta
+        //hay que guardar las imagenes en la carpeta de la tienda, si no existe se crea la carpeta
+        $id_usuario = Cookie::get('id_usuario');
         $tienda_nombre = Tienda::get_tienda($id_usuario)->nombre;
         
         $tienda_nombre = str_replace(' ', '_', $tienda_nombre); // Reemplaza espacios por guiones bajos

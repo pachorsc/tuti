@@ -29,13 +29,13 @@
                         <h2 class="text-2xl font-bold mb-2 mt-6">{{ $post->titulo[$index + 1] }}</h2>
                     @endif
 
-                    @if ($index >= 1 && $index < count($post->titulo)-1)
-                        <h2 class="text-3xl font-bold mb-2 mt-6">{{ $post->titulo[$index+1] }}</h2>
+                    @if ($index >= 1 && $index < count($post->titulo) - 1)
+                        <h2 class="text-3xl font-bold mb-2 mt-6">{{ $post->titulo[$index + 1] }}</h2>
                     @endif
-                    
+
                     @if (isset($post->contenido[$index]))
                         <p>
-                            {{ $post->contenido[$index] }}
+                            {!! nl2br(e($post->contenido[$index])) !!}
                         </p>
                     @endif
                     <div class="flex flex-col items-center justify-center mt-4 mb-4">
