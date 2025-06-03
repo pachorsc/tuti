@@ -36,7 +36,7 @@
                     @csrf
                     <div>
                         <label class="block font-semibold mb-1">Nombre del Producto</label>
-                        <input name="nombre" required type="text" class="w-full p-2 rounded bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <input name="nombre" maxlength="25" required type="text" class="w-full p-2 rounded bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                         @error('nombre')
                             <p class="text-red-500 font-semibold text-sm mt-1">{{ $message }}</p>
                         @enderror

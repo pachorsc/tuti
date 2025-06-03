@@ -10,6 +10,8 @@ use App\Http\Controllers\vendedor_controller;
 use App\Models\User;
 
 Route::get('/', function () {
+    //primero hay que sacar los id de las tiendas cercanas al abrir la web
+    
     return view('welcome');
 })->name('inicio');
 

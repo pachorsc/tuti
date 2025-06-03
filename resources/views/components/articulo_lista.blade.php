@@ -2,7 +2,7 @@
   <!-- Imagen -->
   <div class="w-1/3">
     <div class="aspect-video rounded-md">
-      <img src="{{ $imagen }}" alt="{{ $titulo }}" class="w-full h-full object-cover rounded-md">
+      <img src="{{ explode('***', $imagen)[0] }}" alt="{{ $titulo }}" class="w-full h-full object-cover rounded-md">
     </div>
   </div>
 

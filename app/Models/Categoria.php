@@ -11,8 +11,8 @@ class Categoria extends Model
     {
         return DB::table('categorias')
             ->select('nombre', 'imagen')
+            ->orderBy('nombre', 'asc') // Ordena por nombre
             //->inRandomOrder() // Selecciona los registros en orden aleatorio
-            ->limit(5)        // Limita el resultado a 5 registros
             ->get();
     }
     public static function getCategorias_nombre_id()
