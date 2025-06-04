@@ -178,10 +178,15 @@ Route::Post('usuario/update', function () {
 })->name('update_perfil');
 
 Route::get('/producto/{nombre}/{id}', function ($nombre,$id) {
-    // Aquí puedes implementar la lógica para mostrar el producto
     
     $datos_producto = Elemento::get_elemento_tienda($id);
     $otros_productos = Elemento::get_elementos_tienda($datos_producto[0]->tienda);
     
     return view('producto', ['datos_producto' => $datos_producto[0],'otros_productos'=> $otros_productos ,'is_producto' => $datos_producto[1]]);
 })->name('ver_producto');
+
+Route::get('/reserva/{nombre}/{id}', function ($nombre,$id) {
+    //pestña para reservar los productos o servicios
+    
+    return view('reserva', ['nombre'=>$nombre, 'id'=>$id]);
+})->name('reserva');

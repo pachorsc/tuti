@@ -53,10 +53,16 @@
                     <p class="text-gray-600 text-sm">
                         {{ $datos_producto->descripcion }}
                     </p>
-                    <p class="text-sm text-gray-800 font-medium">Precio: {{$datos_producto->precio}}€</p>
-                    <button class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded">
-                        Comprar / Reservar
-                    </button>
+                    <p class="text-sm text-gray-800 font-medium"><strong>Precio: </strong> {{$datos_producto->precio}}€</p>
+                    @if ($is_producto)
+                    <p class="text-sm text-gray-800 font-medium"><strong>Color: </strong>{{$datos_producto->color}}</p>
+                    <p class="text-sm text-gray-800 font-medium"><strong>Stock: </strong> {{$datos_producto->cantidad}}</p>
+                    @else
+                    <p><strong>Horario: </strong>{{$datos_producto->horario_disp}}</p>
+                    @endif
+                    <a href="{{ asset(asset('/reserva/'.$datos_producto->nombre.'/'. $datos_producto->id)) }}" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded inline-block">
+                        Reservar
+                    </a>
                 </div>
             </div>
 
