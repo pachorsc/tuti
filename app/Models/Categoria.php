@@ -40,7 +40,7 @@ class Categoria extends Model
         if ($categoria && !array_key_exists($categoria->nombre, $categorias)) {
             $categorias[$categoria->nombre] = [
                 'nombre' => $categoria->nombre,
-                'imagen' => $categoria->imagen
+                'imagen' => $categoria->imagen,
             ];
         }
     }

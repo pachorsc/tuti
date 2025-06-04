@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categoria;
+use App\Models\Producto;
 use Illuminate\Http\Request;
 use \App\Models\Coordenadas;
 use App\Models\Post;
 
 
+
 class Tiendas_cercanas_controller extends Controller
 {
-    public function tiendas_cercanas(Request $request)
+    public static function tiendas_cercanas(Request $request)
     {
         $coordenada = $request->input('coordenada', '-3.60667;37.18817'); // valor por defecto si no hay coordenada
         $tiendas = Coordenadas::top10_tiendas_cercanas($coordenada);
@@ -23,6 +25,14 @@ class Tiendas_cercanas_controller extends Controller
         $categorias = Categoria::getCategorias_cercanas($tiendas);
         
         //ahora saco los productos de las tiendas cercanas asojbnpai no tengo productos
-        $productos = Post::sacar_Productos_inicio($tiendas);
+        $productos = Producto::sacar_Productos_inicio($tiendas); //productos con descuentos y sin descuentos cercanos
+        $datos = [
+            'tiendas' => $tiendas,
+            'posts' => $posts,
+            'categorias' => $categorias,
+            'productos' => $productos
+        ];
+        
+        return($datos );
     }
 }

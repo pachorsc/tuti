@@ -56,4 +56,24 @@ class Producto extends Model
                         'color' => $producto->color,
                     ]);
     }
+    static public function sacar_Productos_inicio($tiendas) {
+        $productos = DB::table('elemento')
+            ->join('tienda','elemento.tienda', '=', 'tienda.id') // Relación con tienda
+            ->select(
+                'elemento.id',
+                'elemento.nombre',
+                'elemento.descripcion',
+                'elemento.precio',
+                'elemento.precio_descuento',
+                'elemento.imagen',
+                'tienda.nombre as tienda_nombre'
+            )
+            ->whereIn('tienda.id', $tiendas)
+            ->where('elemento.precio_descuento', '>', 0) // Filtrar productos con descuento
+            ->inRandomOrder() // Orden aleatorio
+            ->orderBy('elemento.calificacion', 'desc') // Ordenar por calificación
+            ->get();
+            
+        return $productos;
+    }
 }

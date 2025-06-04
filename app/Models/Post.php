@@ -72,18 +72,19 @@ class Post extends Model
     //esto va a sacar los primeros 3 post que necesiamos en la pantalla de inicio
     public static function sacar_Posts_inicio(array $tiendas)
     {
-        $posts =[];
-        for ($i=0; $i < 2; $i++)  {
-            $post = DB::table('post')
+        
+            $posts = DB::table('post')
             ->select(
                 'post.id',
                 DB::raw("SUBSTRING_INDEX(post.titulo, ';;;', 1) as titulo"), // Obtiene el texto antes de ';;;'
                 DB::raw("SUBSTRING_INDEX(post.imagen, ';;;', 1) as imagen")  
             )
-            ->where('post.tienda', $tiendas[$i])
-            ->first();
-        array_push($posts, $post);
-        }
+            ->whereIn('post.tienda', $tiendas)
+            ->orderBy('fecha_creacion', 'desc') // Ordenar por fecha de creación
+            ->limit(6) // Limitar a 6 productos
+            ->get();
+        
+        
         return $posts;
     }
 

@@ -108,4 +108,26 @@ class Elemento extends Model
             ->where('id', $id_elemento)
             ->first();
     }
+    static function get_elemento_tienda($id_elemento){
+        //dependiendo si es un producto o un servicio, se obtiene el elemento de la tabla correspondiente
+        $is_producto = DB::table('producto')
+            ->where('id', $id_elemento)
+            ->exists();
+        if ($is_producto) {
+            $elemento = DB::table('producto')
+                ->join('elemento', 'producto.id', '=', 'elemento.id')
+                ->select('producto.*', 'elemento.*')
+                ->where('elemento.id',$id_elemento)
+                ->first();
+        } else {
+            $elemento = DB::table('servicio')
+                ->join('elemento', 'servicio.id', '=', 'elemento.id')
+                ->select('servicio.*', 'elemento.*')
+                ->where('elemento.id',$id_elemento)
+                ->first();
+        }
+        $datos = [$elemento, $is_producto];
+        
+        return $datos;
+    }
 }

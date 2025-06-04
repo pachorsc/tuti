@@ -1,4 +1,4 @@
-<form id="ubicacionForm" method="POST" action="{{ route('tiendas_cercanas') }}">
+<form id="ubicacionForm" method="POST" action="{{ route('inicio') }}">
     @csrf
     <input type="hidden" name="coordenada" id="coordenada">
 </form>

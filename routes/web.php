@@ -1,4 +1,5 @@
 <?php
+use App\Models\Elemento;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormularioController;
 use App\Http\Controllers\Blog_controller;
@@ -8,11 +9,16 @@ use App\Http\Controllers\Tiendas_cercanas_controller;
 use App\Http\Controllers\admin_controller;
 use App\Http\Controllers\vendedor_controller;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
-    //primero hay que sacar los id de las tiendas cercanas al abrir la web
-    
-    return view('welcome');
+    return view('coordenada'); //Longitud ; Latitud
+})->name('ubicacion');
+
+Route::post('/inicio', function (Request $request) {
+
+    $datos = Tiendas_cercanas_controller::tiendas_cercanas($request);//saca id tiendas, posts y productos de las tiendas cercanas
+    return view('welcome', ['datos' => $datos]);
 })->name('inicio');
 
 Route::get('/admin', function () {
@@ -57,7 +63,6 @@ Route::match(['get', 'post'], '/vendedor/{action}', function ($action, \Illumina
     abort(404);
 })->name('admin_action');
 
-Route::post('/', [Tiendas_cercanas_controller::class, 'tiendas_cercanas'])->name('tiendas_cercanas');
 
 Route::get('/nosotros', function () {
     return view('nosotros');
@@ -171,3 +176,12 @@ Route::Post('usuario/update', function () {
     ]);
 
 })->name('update_perfil');
+
+Route::get('/producto/{nombre}/{id}', function ($nombre,$id) {
+    // Aquí puedes implementar la lógica para mostrar el producto
+    
+    $datos_producto = Elemento::get_elemento_tienda($id);
+    $otros_productos = Elemento::get_elementos_tienda($datos_producto[0]->tienda);
+    
+    return view('producto', ['datos_producto' => $datos_producto[0],'otros_productos'=> $otros_productos ,'is_producto' => $datos_producto[1]]);
+})->name('ver_producto');

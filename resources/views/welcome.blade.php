@@ -29,37 +29,51 @@
 
         <body class="bg-gray-100 text-gray-800">
 
+
             <!-- Post Principal y Secundarios -->
-            <section class="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <div class="lg:col-span-2 h-100 bg-gray-300 flex items-center justify-center">POST</div>
+            <section class="container h-[50vh] mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <a href="{{ '/blog/' . $datos['posts'][0]->id }}"
+                    class="rounded transition-transform duration-300 hover:scale-105 lg:col-span-2 bg-cover bg-center h-full bg-[url('{{ explode('***', $datos['posts'][0]->imagen)[0] }}')] bg-gray-300 flex items-center justify-center">
+                    <span
+                        class="text-white font-bold text-xl bg-[#EEC643] w-full text-center">{{ $datos['posts'][0]->titulo }}</span>
+                </a>
                 <div class="flex flex-col gap-4">
-                    <div class="h-32 bg-gray-300 flex items-center justify-center">POST</div>
-                    <div class="h-32 bg-gray-300 flex items-center justify-center">POST</div>
+                    <a href="{{ '/blog/' . $datos['posts'][1]->id }}"
+                        class="rounded transition-transform duration-300 hover:scale-105 h-full bg-cover bg-center bg-[url('{{ explode('***', $datos['posts'][1]->imagen)[0] }}')] flex items-center justify-center">
+                        <span
+                            class="text-white font-bold text-xl bg-[#EEC643] w-full text-center">{{ $datos['posts'][1]->titulo }}</span>
+                    </a>
+                    <a href="{{ '/blog/' . $datos['posts'][2]->id }}"
+                        class="rounded transition-transform duration-300 hover:scale-105 h-full bg-cover bg-center bg-[url('{{ explode('***', $datos['posts'][2]->imagen)[0] }}')] flex items-center justify-center">
+                        <span
+                            class="text-white font-bold text-xl bg-[#EEC643] w-full text-center">{{ $datos['posts'][2]->titulo }}</span>
+                    </a>
                 </div>
             </section>
 
             <!-- Suscripción -->
             <section class="container mx-auto p-4">
-                <div class="bg-gray-200 p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <span class="text-lg font-semibold">Suscríbete</span>
-                    <div class="flex w-full sm:w-auto">
+                <div class="bg-[#247BA0] p-4 flex flex-col sm:flex-row items-center justify-center space-x-5z gap-4">
+                    <span class="text-lg font-semibold">Suscríbete y sabras todas las novedades de las tiendas cerca de
+                        ti</span>
+                    <div class="flex  w-full sm:w-auto">
                         <input type="email" placeholder="Tu correo"
                             class="p-2 border border-gray-400 rounded-l w-full sm:w-auto" />
-                        <button class="bg-blue-500 text-white px-4 rounded-r">Entrar</button>
+                        <button class="bg-gray-500 text-white px-4 rounded-r">Entrar</button>
                     </div>
                 </div>
             </section>
 
             <!-- Categorías -->
-            <section class="container mx-auto p-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div class="bg-gray-300 h-24 flex items-center justify-center">CATEGORÍA</div>
-                <div class="bg-gray-300 h-24 flex items-center justify-center">CATEGORÍA</div>
-                <div class="bg-gray-300 h-24 flex items-center justify-center">CATEGORÍA</div>
-                <div class="bg-gray-300 h-24 flex items-center justify-center">CATEGORÍA</div>
-                <div class="bg-gray-300 h-24 flex items-center justify-center">CATEGORÍA</div>
-                <div class="bg-gray-300 h-24 flex items-center justify-center">CATEGORÍA</div>
-                <div class="bg-gray-300 h-24 flex items-center justify-center">CATEGORÍA</div>
-                <div class="bg-gray-300 h-24 flex items-center justify-center">CATEGORÍA</div>
+            <section class="container flex flex-col mx-auto p-4 gap-4">
+                <h1 class="text-xl font-semibold">Categorías cercanas</h1>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    @foreach ($datos['categorias'] as $categoria)
+                        <a href="{{ '/blog/categoria/' . $categoria['nombre'] }}"
+                            class="bg-[url('{{ $categoria['imagen'] }}')] bg-cover bg-center h-24 flex items-center justify-center shadow rounded transition-transform duration-300 hover:scale-105"><span class="text-white font-bold text-xl bg-[#EEC643] p-2 rounded-3xl text-center">{{ $categoria['nombre'] }}</span></a>
+                    @endforeach
+                </div>
+
             </section>
 
             <!-- Ofertas de la semana -->
@@ -70,11 +84,9 @@
                 </div>
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                     <div class="bg-gray-300 h-32 flex items-center justify-center">Anuncio</div>
-                    <div class="bg-gray-300 h-32 flex items-center justify-center">Oferta</div>
-                    <div class="bg-gray-300 h-32 flex items-center justify-center">Oferta</div>
-                    <div class="bg-gray-300 h-32 flex items-center justify-center">Oferta</div>
-                    <div class="bg-gray-300 h-32 flex items-center justify-center">Oferta</div>
-                    <div class="bg-gray-300 h-32 flex items-center justify-center">Oferta</div>
+                    @foreach ($datos['productos'] as $producto)
+                        <a href="{{ '/producto/' .$producto->nombre.'/'. $producto->id }}" class="bg-[url('{{ $producto->imagen }}')] bg-cover bg-center h-32 flex items-center justify-center"><span class="text-white font-bold text-xl bg-[#EEC643] p-2 rounded-3xl text-center">{{ $producto->nombre }}</span></a>
+                    @endforeach
                 </div>
             </section>
 
