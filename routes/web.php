@@ -182,8 +182,13 @@ Route::get('/producto/{nombre}/{id}', function ($nombre,$id) {
     
     $datos_producto = Elemento::get_elemento_tienda($id);
     $otros_productos = Elemento::get_elementos_tienda($datos_producto[0]->tienda);
+    $iniciado = true;
+    //comprobar si está una sesion iniciada
+    if (Cookie::get('usuario') == null) {
+        $iniciado = false;
+    }
     
-    return view('producto', ['datos_producto' => $datos_producto[0],'otros_productos'=> $otros_productos ,'is_producto' => $datos_producto[1]]);
+    return view('producto', ['iniciado'=> $iniciado,'datos_producto' => $datos_producto[0],'otros_productos'=> $otros_productos ,'is_producto' => $datos_producto[1]]);
 })->name('ver_producto');
 
 Route::get('/reserva/{nombre}/{id}', function ($nombre,$id) {

@@ -60,9 +60,15 @@
                     @else
                     <p><strong>Horario: </strong>{{$datos_producto->horario_disp}}</p>
                     @endif
-                    <a href="{{ asset(asset('/reserva/'.$datos_producto->nombre.'/'. $datos_producto->id)) }}" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded inline-block">
+                    @if (!$iniciado)
+                        <a href="{{ asset('/reserva/'.$datos_producto->nombre.'/'. $datos_producto->id) }}" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded inline-block">
+                        Iniciar Sección
+                    </a>
+                    @else
+                    <a href="{{ asset('/reserva/'.$datos_producto->nombre.'/'. $datos_producto->id) }}" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded inline-block">
                         Reservar
                     </a>
+                    @endif
                 </div>
             </div>
 

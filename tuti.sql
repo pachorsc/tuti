@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-06-2025 a las 17:21:52
+-- Tiempo de generación: 04-06-2025 a las 23:26:58
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -44,7 +44,8 @@ INSERT INTO `categorias` (`id`, `nombre`, `imagen`) VALUES
 (4, 'Zapatería', 'images/categorias/zapatería.jpg'),
 (5, 'Cerrajería', 'images/categorias/cerrajería.jpg'),
 (6, 'Farmacia', 'images/categorias/farmacia.jpg'),
-(7, 'Ropa', 'images/categorias/ropa.jpg');
+(7, 'Ropa', 'images/categorias/ropa.jpg'),
+(8, 'Inmobiliaria', 'images/categorias/inmobiliaria.jpg');
 
 -- --------------------------------------------------------
 
@@ -83,7 +84,9 @@ CREATE TABLE `dueno` (
 INSERT INTO `dueno` (`id`, `tienda`) VALUES
 (3, 5),
 (4, 6),
-(5, 7);
+(5, 7),
+(6, 8),
+(7, 9);
 
 -- --------------------------------------------------------
 
@@ -107,14 +110,11 @@ CREATE TABLE `elemento` (
 --
 
 INSERT INTO `elemento` (`id`, `tienda`, `nombre`, `descripcion`, `precio`, `precio_descuento`, `imagen`, `calificacion`) VALUES
-(13, 5, 'madera doinc', 'es pateria en estado puro', 40.55, 30.00, 'images/tiendas/Frutería_Rosi_3/productos/elemento_madera_doinc.jpg', NULL),
-(14, 5, 'foto partido liga servicio', 'bla bla servico', 40.00, 20.00, 'images/tiendas/Frutería_Rosi_3/servicios/elemento_foto_partido_liga_servicio.jpeg', NULL),
-(15, 5, 'Servicio_3', 'Descripcion 2', 10.22, NULL, 'images/tiendas/Frutería_Rosi_3/servicios/servicio_Servicio_3.gif', NULL),
-(16, 5, 'producto vodafon', 'vofadon', 40.55, NULL, 'images/tiendas/Frutería_Rosi_3/productos/elemento_producto_vodafon.jpeg', NULL),
-(17, 5, 'producto_2', 'es pateria en estado puro', 40.55, NULL, 'images/tiendas/Frutería_Rosi_3/productos/producto_producto_2.jpg', NULL),
-(18, 5, 'producto_3', 'es pateria en estado puro', 40.55, NULL, 'images/tiendas/Frutería_Rosi_3/productos/producto_producto_3.jpg', NULL),
-(19, 5, 'producto_4', 'es pateria en estado puro', 40.55, NULL, 'images/tiendas/Frutería_Rosi_3/productos/producto_producto_4.jpg', NULL),
-(20, 5, 'producto_5', 'es pateria en estado puro', 40.55, NULL, 'images/tiendas/Frutería_Rosi_3/productos/producto_producto_5.jpg', NULL),
+(13, 5, 'Manzana Kg', 'Manzana del Cairo', 2.00, NULL, 'images/tiendas/Frutería_Rosi_3/productos/elemento_Manzana_Kg.jpg', NULL),
+(14, 5, 'Creación de cestas de regalo', 'Creamos cestas de regalo para cualquier evento', 15.00, 10.00, 'images/tiendas/Frutería_Rosi_3/servicios/elemento_Creación_de_cestas_de_regalo.png', NULL),
+(15, 5, 'Asesoramiento nutricional', 'Un servicio donde los clientes reciben recomendaciones sobre frutas según sus necesidades de salud y alimentación.', 15.00, NULL, 'images/tiendas/Frutería_Rosi_3/servicios/elemento_Asesoramiento_nutricional.jpg', NULL),
+(16, 5, 'Plátano de canarias', 'Plátano directamente de canarias', 2.00, NULL, 'images/tiendas/Frutería_Rosi_3/productos/elemento_Plátano_de_canarias.jpg', NULL),
+(17, 5, 'Naranja', 'Naranja para comer', 1.60, NULL, 'images/tiendas/Frutería_Rosi_3/productos/elemento_Naranja.jpg', NULL),
 (21, 6, 'Abrir_cerraduras', 'se abren cerraduras siempre que se vea que es tu casa', 60.00, NULL, 'images/tiendas/CerrajeríaToni_4/servicios/servicio_Abrir_cerraduras.jpg', NULL),
 (22, 6, 'llave_maestra', 'llave que abre casi todas las cerraduras de nivel 1', 25.00, NULL, 'images/tiendas/CerrajeríaToni_4/productos/producto_llave_maestra.jpg', NULL),
 (23, 6, 'Duplicado_de_llaves', 'duplicamos llaves de hasta nivel 2', 12.00, NULL, 'images/tiendas/CerrajeríaToni_4/servicios/servicio_Duplicado_de_llaves.jpg', NULL),
@@ -124,7 +124,13 @@ INSERT INTO `elemento` (`id`, `tienda`, `nombre`, `descripcion`, `precio`, `prec
 (27, 7, 'Corte_de_pelo_Hombre', 'Corte de pelo Hombre con lavado y peinado', 13.00, NULL, 'images/tiendas/Peluquería_y_estética_Paqui_5/servicios/servicio_Corte_de_pelo_Hombre.jpg', NULL),
 (28, 7, 'Shampoo_anti-caida', 'Mejor shampoo anti-caida del mercado con miel', 11.56, NULL, 'images/tiendas/Peluquería_y_estética_Paqui_5/productos/producto_Shampoo_anti-caida.jpg', NULL),
 (29, 7, 'Corte_pelo_mujer', 'Corte de pelo para mujer con masaje capilar y peinado', 15.00, NULL, 'images/tiendas/Peluquería_y_estética_Paqui_5/servicios/servicio_Corte_pelo_mujer.jpg', NULL),
-(30, 7, 'Aceite_para_pelo', 'Aceite para reforzar el pelo y hacerlo mas brillante', 8.00, NULL, 'images/tiendas/Peluquería_y_estética_Paqui_5/productos/producto_Aceite_para_pelo.jpg', NULL);
+(30, 7, 'Aceite_para_pelo', 'Aceite para reforzar el pelo y hacerlo mas brillante', 8.00, NULL, 'images/tiendas/Peluquería_y_estética_Paqui_5/productos/producto_Aceite_para_pelo.jpg', NULL),
+(31, 8, 'Generados_Gasolina', 'Generador de energía que funciona con gasolina', 60.00, NULL, 'images/tiendas/Casa_de_la_electrónica_6/productos/producto_Generados_Gasolina.jpg', NULL),
+(32, 8, 'Reparación_de_teléfonos', 'Reparamos todo tipo de teléfonos', 50.00, NULL, 'images/tiendas/Casa_de_la_electrónica_6/servicios/servicio_Reparación_de_teléfonos.jpg', NULL),
+(33, 8, 'Torre_PC', 'Dell OptiPlex 7040 MT Core i5 3.2 GHz - SSD 128 GB RAM 16 GB', 199.00, NULL, 'images/tiendas/Casa_de_la_electrónica_6/productos/producto_Torre_PC.jpg', NULL),
+(34, 8, 'Reparación_de_lavadoras', 'Reparamos todo tipo de lavadoras', 50.00, NULL, 'images/tiendas/Casa_de_la_electrónica_6/servicios/servicio_Reparación_de_lavadoras.jpg', NULL),
+(35, 9, 'productos_para_dormir', 'Asesoria para productos para dormir', 8.00, NULL, 'images/tiendas/Farmacia_del_carmen_7/servicios/servicio_productos_para_dormir.jpg', NULL),
+(36, 9, 'Adelgazante', 'Adelgazin es un producto que absorbe la grasa abdominal', 15.00, NULL, 'images/tiendas/Farmacia_del_carmen_7/productos/producto_Adelgazante.jpg', NULL);
 
 -- --------------------------------------------------------
 
@@ -167,7 +173,8 @@ INSERT INTO `post` (`id`, `tienda`, `titulo`, `contenido`, `imagen`, `fecha_crea
 (9, 5, 'Titulo 1;;;Subtitulo 1;;;titulo 2', 'parrafo1;;;Parrafo 2', 'images/tiendas/Frutería_Rosi_3/post_2/f0.jpeg', '2025-05-27', NULL),
 (10, 5, 'Titulo 1;;;Subtitulo 1;;;titulo 2;;;t3', 'PArrafo 1;;;Parrafo 2;;;PArrafo 3', 'images/tiendas/Frutería_Rosi_3/post_3/f0.jpeg;;;images/tiendas/Frutería_Rosi_3/post_3/f1.jpeg', '2025-05-27', NULL),
 (11, 6, 'Protege tu bici;;;La importancia de un buen candado en Granada', 'Granada es una ciudad vibrante y llena de vida, ideal para moverse en bicicleta. Sin embargo, los constantes robos han convertido la seguridad en una prioridad para quienes dependen de sus bicis para desplazarse.\r\n\r\nPara evitar sorpresas desagradables, elegir un buen candado es esencial. No todos los candados ofrecen la misma protección: los modelos más frágiles pueden ser fácilmente cortados con herramientas comunes, dejando tu bicicleta vulnerable.\r\n\r\n¿Cómo elegir el mejor candado?\r\nMaterial resistente: Opta por acero reforzado o cerraduras con certificación de seguridad.\r\n\r\nTipo de cierre: Los candados en forma de “U” suelen ser más seguros que los de cable.\r\n\r\nUbicación: Asegura tu bici a estructuras fijas y evita lugares aislados.\r\n\r\nInvertir en un candado de calidad no es un gasto innecesario, sino una inversión para evitar la pérdida de tu bicicleta y la frustración de tener que reemplazarla. Cuida tu bici, protege tu movilidad y evita ser víctima de los robos en Granada.', 'images/tiendas/CerrajeríaToni_4/post_0/f0.jpg', '2025-06-02', NULL),
-(12, 6, 'Guía para comprar la mejor puerta para tu hogar;;;Una puerta no es solo una entrada, es la primera línea de defensa de tu hogar y un elemento clave en la estética de tu espacio. Elegir la puerta adecuada requiere considerar seguridad, materiales y diseño.', '¿Qué debes tener en cuenta al comprar una puerta?\r\n🔹 Material:\r\n\r\nMadera maciza: Elegante y resistente, ideal para interiores.\r\n\r\nAcero: Máxima seguridad para puertas exteriores.\r\n\r\nPVC o aluminio: Duraderos y fáciles de mantener.\r\n\r\n🔹 Seguridad:\r\n\r\nBusca puertas con cerraduras multipunto para mayor protección.\r\n\r\nSi es exterior, asegúrate de que tenga resistencia contra impactos.\r\n\r\n🔹 Aislamiento:\r\n\r\nUna buena puerta ayuda a mantener la temperatura de tu hogar y reducir el ruido exterior.\r\n\r\n🔹 Diseño:\r\n\r\nQue combine con el estilo de tu casa y refleje tu personalidad.\r\n\r\nInvertir en una puerta de calidad es mejorar la seguridad y comodidad de tu hogar. Antes de comprar, compara opciones y elige la que mejor se adapte a tus necesidades.', 'images/tiendas/CerrajeríaToni_4/post_1/f0.jpg', '2025-06-02', NULL);
+(12, 6, 'Guía para comprar la mejor puerta para tu hogar;;;Una puerta no es solo una entrada, es la primera línea de defensa de tu hogar y un elemento clave en la estética de tu espacio. Elegir la puerta adecuada requiere considerar seguridad, materiales y diseño.', '¿Qué debes tener en cuenta al comprar una puerta?\r\n🔹 Material:\r\n\r\nMadera maciza: Elegante y resistente, ideal para interiores.\r\n\r\nAcero: Máxima seguridad para puertas exteriores.\r\n\r\nPVC o aluminio: Duraderos y fáciles de mantener.\r\n\r\n🔹 Seguridad:\r\n\r\nBusca puertas con cerraduras multipunto para mayor protección.\r\n\r\nSi es exterior, asegúrate de que tenga resistencia contra impactos.\r\n\r\n🔹 Aislamiento:\r\n\r\nUna buena puerta ayuda a mantener la temperatura de tu hogar y reducir el ruido exterior.\r\n\r\n🔹 Diseño:\r\n\r\nQue combine con el estilo de tu casa y refleje tu personalidad.\r\n\r\nInvertir en una puerta de calidad es mejorar la seguridad y comodidad de tu hogar. Antes de comprar, compara opciones y elige la que mejor se adapte a tus necesidades.', 'images/tiendas/CerrajeríaToni_4/post_1/f0.jpg', '2025-06-02', NULL),
+(13, 5, '🌿 Frescura natural en cada bocado 🍎 Tu frutería de confianza, directo a tu hogar;;;Disfruta de frutas frescas sin salir de casa con nuestro servicio de entrega a domicilio. Elige entre una amplia variedad de opciones y recibe la mejor calidad sin complicaciones.', 'Disfruta del sabor auténtico de las frutas más frescas con nuestro servicio de entrega a domicilio. Olvídate de las prisas y las largas filas, nosotros llevamos hasta tu puerta la mejor selección de frutas de temporada, garantizando calidad y frescura en cada pedido.\r\n\r\n🎁 ¿Quieres sorprender a alguien especial? Nuestras cestas personalizadas son el regalo perfecto. Puedes elegir entre una gran variedad de frutas y nosotros nos encargamos de crear una presentación única y deliciosa. Perfecto para cumpleaños, aniversarios o simplemente para compartir salud.\r\n\r\n🥑 Además, cuidamos tu bienestar con nuestro servicio de asesoramiento nutricional. Si tienes dudas sobre qué frutas son mejores para tu dieta, nuestro equipo te guiará para que tomes la mejor decisión según tus necesidades. Comer bien nunca ha sido tan fácil.\r\n\r\n📍 Ven a visitarnos en nuestra tienda o haz tu pedido en línea. ¡Déjate llevar por el auténtico sabor de la naturaleza y disfruta de la frescura que mereces! 🍊🍏', 'images/tiendas/Frutería_Rosi_3/post_4/f0.jpg***images/tiendas/Frutería_Rosi_3/post_4/f_2.jpg', '2025-06-03', NULL);
 
 -- --------------------------------------------------------
 
@@ -186,17 +193,17 @@ CREATE TABLE `producto` (
 --
 
 INSERT INTO `producto` (`id`, `cantidad`, `color`) VALUES
-(13, 10, 'azul'),
-(16, 10, NULL),
-(17, 10, NULL),
-(18, 10, NULL),
-(19, 10, NULL),
-(20, 10, NULL),
+(13, 20, 'rojo'),
+(16, 20, 'amarillo'),
+(17, 20, 'Naranja'),
 (22, 20, NULL),
 (24, 10, NULL),
 (25, 10, NULL),
 (28, 10, NULL),
-(30, 5, NULL);
+(30, 5, NULL),
+(31, 2, NULL),
+(33, 1, NULL),
+(36, 5, NULL);
 
 -- --------------------------------------------------------
 
@@ -250,7 +257,10 @@ INSERT INTO `servicio` (`id`, `horario_disp`) VALUES
 (23, '10:00 - 20:00 L, M, M, J, V,'),
 (26, '10:00 - 20:00 L, M, M, J, V,'),
 (27, '10:00 - 14:00 / 16:00 - 20:00 L, M, M, J, V,'),
-(29, '10:00 - 14:00 / 16:00 - 20:00 L, M, M, J, V,');
+(29, '10:00 - 14:00 / 16:00 - 20:00 L, M, M, J, V,'),
+(32, '10:00 - 20:00 L, M, M, J, V,'),
+(34, '10:00 - 20:00 L, M, M, J, V,'),
+(35, '10:00 - 14:00 / 16:00 - 20:00 L, M, M, J, V,');
 
 -- --------------------------------------------------------
 
@@ -262,6 +272,7 @@ CREATE TABLE `tienda` (
   `id` int(11) NOT NULL,
   `nombre` varchar(50) NOT NULL,
   `direccion` varchar(100) NOT NULL,
+  `telefono` varchar(20) NOT NULL,
   `coordenada` text NOT NULL,
   `horario` varchar(100) NOT NULL,
   `tipo` int(11) DEFAULT NULL,
@@ -273,10 +284,12 @@ CREATE TABLE `tienda` (
 -- Volcado de datos para la tabla `tienda`
 --
 
-INSERT INTO `tienda` (`id`, `nombre`, `direccion`, `coordenada`, `horario`, `tipo`, `imagen`, `calificacion`) VALUES
-(5, 'Frutería Rosi', 'Camino de Ronda, 120, 18003 Granada', '-3.6126021;37.1812067', '10:00 - 20:00 L, M, M, J, V, S', 1, 'images/tiendas/Fruteria_Rosi_3/principal.jpg', 0.0),
-(6, 'CerrajeríaToni', 'C. los Juncos, s/n, Granada', '-3.6524309;37.2446527', '10:00 - 20:00 L, M, M, J, V, S', 5, 'images/tiendas/CerrajeríaToni_4/principal.jpg', 0.0),
-(7, 'Peluquería y estética Paqui', 'C. Emilia Pardo Bazán, 8, Beiro, Granada', '-3.6060954;37.2003356', '10:00 - 14:00 / 16:00 - 20:00 L, M, M, J, V,', 2, 'images/tiendas/Peluquería_y_estética_Paqui_5/principal.jpg', 0.0);
+INSERT INTO `tienda` (`id`, `nombre`, `direccion`, `telefono`, `coordenada`, `horario`, `tipo`, `imagen`, `calificacion`) VALUES
+(5, 'Frutería Rosi', 'Camino de Ronda, 120, 18003 Granada', '12345679', '-3.6126021;37.1812067', '10:00 - 20:00 L, M, M, J, V, S', 1, 'images/tiendas/Frutería_Rosi_3/principal.jpg', 0.0),
+(6, 'CerrajeríaToni', 'C. los Juncos, s/n, Granada', '87654321', '-3.6524309;37.2446527', '10:00 - 20:00 L, M, M, J, V, S', 5, 'images/tiendas/CerrajeríaToni_4/principal.jpg', 0.0),
+(7, 'Peluquería y estética Paqui', 'C. Emilia Pardo Bazán, 8, Beiro, Granada', '+34 12345678', '-3.6060954;37.2003356', '10:00 - 14:00 / 16:00 - 20:00 L, M, M, J, V,', 2, 'images/tiendas/Peluquería_y_estética_Paqui_5/principal.jpg', 0.0),
+(8, 'Casa de la electrónica', 'Calle Alhamar, 6, 18005, Granada', '+55 81726354', '-3.6001781;37.1691122', '10:00 - 20:00 L, M, M, J, V, S', 3, 'images/tiendas/Casa_de_la_electrónica_6/principal.jpg', 0.0),
+(9, 'Farmacia del carmen', 'C/ Gran Vía de Colón, 15, 18001, Granada', '+66 777 777 43', '-3.599554;37.1794571', '10:00 - 20:00 L, M, M, J, V, S', 6, 'images/tiendas/Farmacia_del_carmen_7/principal.jpg', 0.0);
 
 -- --------------------------------------------------------
 
@@ -302,7 +315,9 @@ INSERT INTO `usuario` (`id`, `fecha_creacion`, `nombre`, `correo`, `apellido`, `
 (2, '2025-05-20 08:26:15', 'admin', 'admin@admin.com', 'admin', '$2y$12$4Oo9PLFOj99jQCf9rRw9Y.gilQ6/86.bleGw4MphmFaMw.DNphEaa'),
 (3, '2025-05-20 06:27:23', 'Vendedor cambio', 'vendedor1@gmail.com', 'dos', '$2y$12$/yoNqcIia8dDvqel/bidhu1ZJWq/BlmW6SvQyVmqw9uul/LRPzSha'),
 (4, '2025-05-20 06:34:23', 'Toni Cerrajero', 'vendedor2@gmail.com', 'Carril', '$2y$12$4HuFtIrg8MFEhQgi6JGZgu7KuEeYluANr30wFcX4jGgv9b2AfHGMK'),
-(5, '2025-05-20 06:44:41', 'Vendedor 3', 'vendedor3@gmail.com', 'tres', '$2y$12$NrEONAFmaGut0MLd3O5GLesCUECiVpbv5p9Nt9tOehjG7aLnxKXMS');
+(5, '2025-05-20 06:44:41', 'Vendedor 3', 'vendedor3@gmail.com', 'tres', '$2y$12$NrEONAFmaGut0MLd3O5GLesCUECiVpbv5p9Nt9tOehjG7aLnxKXMS'),
+(6, '2025-06-03 05:21:24', 'Vendedor 4', 'vendedor4@gmail.com', 'cuatro', '$2y$12$7z87BhVtoMqNWEPJQ6.fy.qOtzfrFqips9uuEDcmsc7GPh/83k3X.'),
+(7, '2025-06-03 05:21:43', 'Vendedor 5', 'vendedor5@gmail.com', 'cinco', '$2y$12$v./5bSrb5sIbB2glkqbITecV/noPeOKCX/94aj1L4Zu/HKbIXHUta');
 
 --
 -- Índices para tablas volcadas
@@ -396,13 +411,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `elemento`
 --
 ALTER TABLE `elemento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT de la tabla `pedido`
@@ -414,7 +429,7 @@ ALTER TABLE `pedido`
 -- AUTO_INCREMENT de la tabla `post`
 --
 ALTER TABLE `post`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `resena`
@@ -432,13 +447,13 @@ ALTER TABLE `reserva`
 -- AUTO_INCREMENT de la tabla `tienda`
 --
 ALTER TABLE `tienda`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restricciones para tablas volcadas
