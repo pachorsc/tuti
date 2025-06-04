@@ -41,6 +41,7 @@ class Tienda extends Model
         $horario = $request->input('horario');
         $categoria = $request->input('tipo');
         $imagen = $request->file('imagen');
+        $telefono = $request->file('telefono');
 
         // Guardar la imagen
 
@@ -70,7 +71,8 @@ class Tienda extends Model
             'horario' => $horario,
             'tipo' => $categoria,
             'imagen' => $ruta_imagen,
-            'calificacion' => 0
+            'calificacion' => 0,
+            'telefono' => $telefono
         ]);
         // Obtener el ID de la tienda recién creada
         $id_tienda = DB::getPdo()->lastInsertId();
@@ -80,14 +82,20 @@ class Tienda extends Model
             ->update(['tienda' => $id_tienda]);
 
     }
-
-    public static function get_tienda($id_usuario)
+    public static function get_tienda_id_tienda($id_tienda) {
+        return DB::table('tienda')
+            ->select('nombre', 'direccion', 'horario', 'tipo', 'imagen')
+            ->where('dueno.id', $id_tienda)
+            ->first();
+    }
+    public static function get_tienda_id_prod($elemento_id)
     {
         $tienda = DB::table('tienda')
-            ->join('dueno', 'tienda.id', '=', 'dueno.tienda')
-            ->select('nombre', 'direccion', 'horario', 'tipo', 'imagen')
-            ->where('dueno.id', $id_usuario)
+            ->join('elemento', 'tienda.id', '=', 'elemento.tienda')
+            ->select('tienda.nombre', 'tienda.direccion', 'tienda.horario', 'tienda.imagen', 'tienda.telefono')
+            ->where('elemento.id', $elemento_id)
             ->first();
+        
 
         return $tienda;
     }
@@ -99,6 +107,7 @@ class Tienda extends Model
         $horario_nuevo = $request->input('horario');
         $categoria_nuevo = $request->input('tipo');
         $imagen_nuevo = $request->file('imagen');
+        $telefono_nuevo = $request->input('telefono');
 
         $tienda_fin = [];
 
@@ -106,7 +115,7 @@ class Tienda extends Model
         // primero miramos que datos cambiaron
         $antiegua_tienda = DB::table('tienda')
             ->join('dueno', 'tienda.id', '=', 'dueno.tienda')
-            ->select('nombre', 'direccion','coordenada', 'horario', 'tipo', 'imagen')
+            ->select('nombre', 'direccion','coordenada', 'horario', 'tipo', 'imagen', 'telefono')
             ->where('dueno.id', $id_usuario)
             ->first();
         if ($antiegua_tienda->nombre != $nombre_nuevo) {
@@ -165,6 +174,11 @@ class Tienda extends Model
         } else {
             $tienda_fin['imagen'] = $antiegua_tienda->imagen;
         }
+        if ($antiegua_tienda->telefono != $telefono_nuevo) {
+            $tienda_fin['telefono'] = $telefono_nuevo;
+        } else {
+            $tienda_fin['telefono'] = $antiegua_tienda->telefono;
+        }
 
         // Actualizar la tienda en la base de datos
         DB::table('tienda')
@@ -179,5 +193,13 @@ class Tienda extends Model
             ->value('tienda');
 
         return $tienda;
+    }
+
+    public static function get_tienda_id_usu($id_usuario) {
+        return DB::table('tienda')
+        ->join('dueno', 'tienda.id', '=', 'dueno.tienda')
+        ->where('dueno.id', $id_usuario)
+        ->select('tienda.*')
+        ->first();
     }
 }

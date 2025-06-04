@@ -56,6 +56,13 @@
                         @enderror
                     </div>
                     <div>
+                        <label class="block font-semibold mb-1">Teléfono</label>
+                        <input name="telefono" type="tel"pattern="[+][0-9]{9}" class="w-full p-2 rounded bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ej: 600123456">
+                        @error('telefono')
+                            <p class="text-red-500 font-semibold text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div>
                         <label class="block font-semibold mb-1">Tipo</label>
                         <select name="tipo" class="w-full p-2 rounded bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                             @foreach($categorias as $categoria)

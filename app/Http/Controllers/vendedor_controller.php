@@ -40,6 +40,7 @@ class vendedor_controller extends Controller
             'tipo' => 'required|integer',
             'horario' => 'required|string',
             'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'telefono' => 'required|string|max:9'
         ]);
 
         Tienda::registro_tienda($request);
@@ -51,7 +52,7 @@ class vendedor_controller extends Controller
     {
         $id_usuario = Cookie::get('id_usuario');
         // verificamos si tiene tienda
-        $tienda_vendedor = Tienda::get_tienda($id_usuario);
+        $tienda_vendedor = Tienda::get_tienda_id_usu($id_usuario);
         $categorias = Categoria::getCategorias_nombre_id();
 
         return view('dueno.editar_tienda', ['tienda' => $tienda_vendedor, 'categorias' => $categorias]);
@@ -65,6 +66,7 @@ class vendedor_controller extends Controller
             'tipo' => 'required|integer',
             'horario' => 'required|string',
             'imagen' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'telefono' => 'required|string|max:9'
         ]);
         //si la direccion no es valida vuelve al formulario
         $coordenada = Coordenadas::coordenada_por_direccion($request->input('direccion'));

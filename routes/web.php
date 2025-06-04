@@ -10,6 +10,7 @@ use App\Http\Controllers\admin_controller;
 use App\Http\Controllers\vendedor_controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Tienda;
 
 Route::get('/', function () {
     return view('coordenada'); //Longitud ; Latitud
@@ -187,6 +188,13 @@ Route::get('/producto/{nombre}/{id}', function ($nombre,$id) {
 
 Route::get('/reserva/{nombre}/{id}', function ($nombre,$id) {
     //pestña para reservar los productos o servicios
+    $datos_producto = Elemento::get_elemento_tienda($id);
+    $tienda = Tienda::get_tienda_id_prod($id);
     
-    return view('reserva', ['nombre'=>$nombre, 'id'=>$id]);
+    return view('reserva', ['nombre'=>$nombre, 'id'=>$id, 'producto'=>$datos_producto, 'tienda'=>$tienda] );
 })->name('reserva');
+
+//Route::get('/reservar_producto', function () {
+
+    //return view('carrito');
+//})->name('reserva');
