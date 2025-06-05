@@ -215,6 +215,7 @@ class vendedor_controller extends Controller
 
         // Guardar el producto en la base de datos
         Producto::insert_servicio($request);
+        
 
         // Redirigir a la vista de la tienda
         return redirect('/vendedor/tienda')->with('success', 'Producto creado correctamente.');

@@ -64,6 +64,10 @@
                         <a href="/entrar" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded inline-block">
                         Iniciar Sesión para Reservar
                     </a>
+                    @elseif (Cookie::get('vendedor') != null)
+                    <a class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded inline-block">
+                        Reservar
+                    </a>
                     @else
                     <a href="{{ asset('/reserva/'.$datos_producto->nombre.'/'. $datos_producto->id) }}" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded inline-block">
                         Reservar

@@ -293,6 +293,9 @@ Route::get('/ver_carrito', function () {
     if (Cookie::get('usuario') == null) {
         return redirect()->route('entrar');
     }
+    if(Cookie::get('comprador') != 'true'){
+        return redirect()->route('ver_usuario', ['mensaje' => 'siendo vendedor no puedes comprar']);
+    }
 
     // Obtener el texto plano de la cookie
     $carrito = Cookie::get('carrito', ''); // Ejemplo: "2:5;1:8;3:12;"
@@ -332,8 +335,13 @@ Route::get('/usuario', function () {
     //traemos nombre, apellido, correo   y si es un comprador traemos 
     $usuario = User::find($id_usuario);
 
+    $mensaje = request('mensaje', ''); // Obtener el mensaje de la URL, si existe
+    $error = request('error', ''); // Obtener el mensaje de error de la URL, si existe
+
     return view('usuario', [
         'usuario' => $usuario,
+        'mensaje' => $mensaje,
+        'error' => $error,
     ]);
 
 })->name('ver_usuario');
