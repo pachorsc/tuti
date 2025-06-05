@@ -214,7 +214,7 @@ class vendedor_controller extends Controller
         $id_usuario = Cookie::get('id_usuario');
 
         // Guardar el producto en la base de datos
-        Producto::insert_servicio($request, $id_usuario);
+        Producto::insert_servicio($request);
 
         // Redirigir a la vista de la tienda
         return redirect('/vendedor/tienda')->with('success', 'Producto creado correctamente.');

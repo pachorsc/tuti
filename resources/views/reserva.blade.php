@@ -38,13 +38,14 @@
                             <button class="px-2 py-1 bg-gray-200 rounded" @click="if(cantidad > 1)cantidad--"
                                 type="button">-</button>
 
-                            <input type="number" :value="cantidad" readonly
+                            <input type="number" name="cantidad" :value="cantidad" readonly
                                 class="w-10 text-center border rounded bg-white" />
-
-                            <button class="px-2 py-1 bg-gray-200 rounded"
+                                
+                                <button class="px-2 py-1 bg-gray-200 rounded"
                                 @click="if(cantidad < {{ $producto[0]->cantidad }}) cantidad++" type="button">+</button>
-                        </div>
-                
+                            </div>
+                            
+                           
             </div>
                         <div class="text-center sm:text-left">
                             <p class="font-semibold">Método de pago</p>
@@ -57,7 +58,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        <input type="number" hidden name="producto" value="{{ $producto[0]->id }}">
                         <div class="text-center">
                             <button type="submit" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">
                                 Añadir al carrito

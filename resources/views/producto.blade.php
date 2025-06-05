@@ -61,7 +61,7 @@
                     <p><strong>Horario: </strong>{{$datos_producto->horario_disp}}</p>
                     @endif
                     @if (!$iniciado)
-                        <a href="{{ asset('/reserva/'.$datos_producto->nombre.'/'. $datos_producto->id) }}" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded inline-block">
+                        <a href="/entrar" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded inline-block">
                         Iniciar Sección
                     </a>
                     @else

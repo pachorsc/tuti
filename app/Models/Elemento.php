@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class Elemento extends Model
 {
+    protected $table = 'elemento';
     static function get_elementos_tienda($id_tienda)
     {
         //seleccionar todos los elementos de la tienda
