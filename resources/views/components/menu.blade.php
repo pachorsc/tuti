@@ -5,7 +5,6 @@
       </a>
       
       <a href="/blog" class="border border-black px-4 py-1 bg-[#247BA0] hover:bg-[#1f6887]">Blog</a>
-      
       @if(Cookie::get('comprador'))
         <a href="/usuario" class="border border-black px-4 py-1 bg-[#247BA0] hover:bg-[#1f6887]">Usuario</a>
         <a href="/cerrar_sesion?" class="border border-black px-4 py-1 bg-[#247BA0] hover:bg-[#1f6887]">Salir</a>

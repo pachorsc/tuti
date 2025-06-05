@@ -104,6 +104,8 @@ Route::get('/cerrar_sesion', function () {
         'vendedor',
         'id_usuario',
         'carrito',
+        'comprador',
+        'vendedor'
         // agrega aquí cualquier otra cookie personalizada que uses
     ];
     foreach ($cookies as $cookie) {
@@ -319,3 +321,19 @@ Route::get('/ver_carrito', function () {
 
     return view('carrito', ['carrito' => $carrito_obj]);
 })->name('ver_carrito');
+
+Route::get('/usuario', function () {
+    // Verificar si el usuario está autenticado
+    if (Cookie::get('usuario') == null) {
+        return redirect()->route('entrar');
+    }
+    // Obtener el ID del usuario desde la cookie
+    $id_usuario = Cookie::get('id_usuario');
+    //traemos nombre, apellido, correo   y si es un comprador traemos 
+    $usuario = User::find($id_usuario);
+
+    return view('usuario', [
+        'usuario' => $usuario,
+    ]);
+
+})->name('ver_usuario');
