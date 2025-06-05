@@ -96,7 +96,6 @@ Route::get('/entrar', function () {
 })->name('entrar');
 Route::post('/inicio_sesion', [Inicio_sesion_controller::class, 'iniciar_sesion'])->name('inicio_sesion');
 
-
 Route::get('/cerrar_sesion', function () {
     // Lista de todas las cookies que quieres eliminar
     $cookies = [
@@ -104,6 +103,7 @@ Route::get('/cerrar_sesion', function () {
         'admin',
         'vendedor',
         'id_usuario',
+        'carrito',
         // agrega aquí cualquier otra cookie personalizada que uses
     ];
     foreach ($cookies as $cookie) {
@@ -210,7 +210,7 @@ Route::post('/reservar_producto', function () {
     $carrito = Cookie::get('carrito', ''); // Ejemplo: "2:5;1:8;3:12;"
 
     // Separar los pedidos por producto
-        $items = $carrito ? explode(';', trim($carrito, ';')) : [];
+    $items = $carrito ? explode(';', trim($carrito, ';')) : [];
 
     $carrito_obj = [];
     $encontrado = false;
@@ -285,3 +285,37 @@ Route::post('/api/verificar-descuento', function (Request $request) {
         ], 400);
     }
 });
+
+Route::get('/ver_carrito', function () {
+    // Verificar si el usuario está autenticado
+    if (Cookie::get('usuario') == null) {
+        return redirect()->route('entrar');
+    }
+
+    // Obtener el texto plano de la cookie
+    $carrito = Cookie::get('carrito', ''); // Ejemplo: "2:5;1:8;3:12;"
+
+    // Separar los pedidos por producto
+    $items = $carrito ? explode(';', trim($carrito, ';')) : [];
+
+    $carrito_obj = [];
+    foreach ($items as $item) {
+        if (empty($item))
+            continue;
+        list($cant, $producto_id) = explode(':', $item);
+        $producto_db = Elemento::get_elemento($producto_id);
+
+        if ($producto_db) {
+            $carrito_obj[] = [
+                'cantidad' => (int) $cant,
+                'producto_id' => (int) $producto_id,
+                'nombre' => $producto_db->nombre,
+                'precio' => $producto_db->precio,
+                'tienda' => $producto_db->tienda,
+                'imagen' => $producto_db->imagen,
+            ];
+        }
+    }
+
+    return view('carrito', ['carrito' => $carrito_obj]);
+})->name('ver_carrito');

@@ -28,7 +28,7 @@
         </button>
       </div>
 
-      <a href="">
+      <a href="/ver_carrito" class="relative">
         <img src="{{ asset('images/icons/ShoppingCart.svg') }}" alt="User" class="w-8 h-8 object-cover">
       </a>
     </div>

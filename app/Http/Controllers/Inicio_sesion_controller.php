@@ -9,6 +9,9 @@ class Inicio_sesion_controller
 {
     public function iniciar_sesion(Request $request)
     {
+        //eliminar la cookie de carrito
+        Cookie::queue(Cookie::forget('carrito'));
+        
         if (User::iniciar_sesion($request->correo, $request->contrasena)) {
             // Correcto
             Cookie::queue('usuario', $request->correo, 60); // 60 minutos
@@ -27,7 +30,7 @@ class Inicio_sesion_controller
 
                 //creo una cookie con el id del usuario para poder usarlo en cualquier cambio
                 Cookie::queue('id_usuario', $id_usuario, 60); // 60 minutos
-                return redirect()->route('blog');
+                return redirect()->route('ubicacion');
             }
 
         } else {
