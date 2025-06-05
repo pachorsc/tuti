@@ -205,14 +205,12 @@ Route::get('/reserva/{nombre}/{id}', function ($nombre, $id) {
 Route::post('/reservar_producto', function () {
     $cantidad = $_POST['cantidad'];
     $producto = $_POST['producto'];
-    $pedido = $cantidad . ':' . $producto . ';';
 
     // Obtener el texto plano de la cookie
     $carrito = Cookie::get('carrito', ''); // Ejemplo: "2:5;1:8;3:12;"
 
     // Separar los pedidos por producto
-    $items = $carrito ? explode(';', trim($carrito, ';')):[];
-
+        $items = $carrito ? explode(';', trim($carrito, ';')) : [];
 
     $carrito_obj = [];
     $encontrado = false;
@@ -225,9 +223,9 @@ Route::post('/reservar_producto', function () {
             $cant += $cantidad;
             $encontrado = true;
         }
-        
+
         $producto_db = Elemento::get_elemento($producto_id);
-        
+
         if ($producto_db) {
             $carrito_obj[] = [
                 'cantidad' => (int) $cant,
@@ -254,7 +252,15 @@ Route::post('/reservar_producto', function () {
             ];
         }
     }
-    
+    // Convertir el carrito a string plano
+    $carrito_str = '';
+    foreach ($carrito_obj as $item) {
+        $carrito_str .= $item['cantidad'] . ':' . $item['producto_id'] . ';';
+    }
+
+    // Guardar el string en la cookie 'carrito' por 60 minutos
+    Cookie::queue('carrito', $carrito_str, 60);
+
     return view('carrito', ['carrito' => $carrito_obj]);
 })->name('reservar_producto');
 
