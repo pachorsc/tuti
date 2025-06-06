@@ -13,10 +13,28 @@
 
     <!-- Styles / Scripts -->
     <script src="http://cdn.tailwindcss.com"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
 
 </head>
 
-<body class="">
+<body class="" x-data="{ cargando: true }" x-init="
+    let timeout = setTimeout(() => { cargando = false }, 5000); // Oculta el loader tras 5 segundos
+    navigator.geolocation.getCurrentPosition(
+        function() { cargando = false; clearTimeout(timeout); },
+        function() { cargando = false; clearTimeout(timeout); }
+    );
+">
+    <div x-show="cargando"
+        class="fixed inset-0 bg-white bg-opacity-80 flex items-center justify-center z-50 transition-opacity">
+        <div class="flex flex-col items-center">
+            <svg class="animate-spin h-12 w-12 text-yellow-400 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+            </svg>
+            <span class="text-lg font-semibold text-yellow-600">Cargando ubicación...</span>
+        </div>
+    </div>
     <header>
         <x-menu></x-menu>
     </header>
@@ -70,7 +88,8 @@
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     @foreach ($datos['categorias'] as $categoria)
                         <a href="{{ '/blog/categoria/' . $categoria['nombre'] }}"
-                            class="bg-[url('{{ $categoria['imagen'] }}')] bg-cover bg-center h-24 flex items-center justify-center shadow rounded transition-transform duration-300 hover:scale-105"><span class="text-white font-bold text-xl bg-[#EEC643] p-2 rounded-3xl text-center">{{ $categoria['nombre'] }}</span></a>
+                            class="bg-[url('{{ $categoria['imagen'] }}')] bg-cover bg-center h-24 flex items-center justify-center shadow rounded transition-transform duration-300 hover:scale-105"><span
+                                class="text-white font-bold text-xl bg-[#EEC643] p-2 rounded-3xl text-center">{{ $categoria['nombre'] }}</span></a>
                     @endforeach
                 </div>
 
@@ -83,9 +102,10 @@
                     <a href="#" class="text-blue-500 text-sm">Ver más →</a>
                 </div>
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                    <div class="bg-gray-300 h-32 flex items-center justify-center">Anuncio</div>
-                    @foreach ($datos['productos'] as $producto)
-                        <a href="{{ '/producto/' .$producto->nombre.'/'. $producto->id }}" class="bg-[url('{{ $producto->imagen }}')] bg-cover bg-center h-32 flex items-center justify-center"><span class="text-white font-bold text-xl bg-[#EEC643] p-2 rounded-3xl text-center">{{ $producto->nombre }}</span></a>
+                    @foreach ($datos['productos']->take(8) as $producto)
+                        <a href="{{ '/producto/' . $producto->nombre . '/' . $producto->id }}"
+                            class="shadow transition-transform duration-300 hover:scale-105 bg-[url('{{ $producto->imagen }}')] bg-cover bg-center h-32 flex items-center justify-center"><span
+                                class="text-white font-bold text-xl bg-[#EEC643] p-2 rounded-3xl text-center">{{ $producto->nombre }}</span></a>
                     @endforeach
                 </div>
             </section>
@@ -124,6 +144,7 @@
     <footer>
         <x-footer></x-footer>
     </footer>
+   
 </body>
 
 </html>

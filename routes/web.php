@@ -200,6 +200,7 @@ Route::get('/reserva/{nombre}/{id}', function ($nombre, $id) {
     //pestña para reservar los productos o servicios
     $datos_producto = Elemento::get_elemento_tienda($id);
     $tienda = Tienda::get_tienda_id_prod($id);
+    
 
     return view('reserva', ['nombre' => $nombre, 'id' => $id, 'producto' => $datos_producto, 'tienda' => $tienda]);
 })->name('reserva');
@@ -234,6 +235,7 @@ Route::post('/reservar_producto', function () {
                 'producto_id' => (int) $producto_id,
                 'nombre' => $producto_db->nombre,
                 'precio' => $producto_db->precio,
+                'precio_descuento' => $producto_db->precio_descuento,
                 'tienda' => $producto_db->tienda,
                 'imagen' => $producto_db->imagen,
             ];
@@ -249,6 +251,7 @@ Route::post('/reservar_producto', function () {
                 'producto_id' => (int) $producto,
                 'nombre' => $producto_db->nombre,
                 'precio' => $producto_db->precio,
+                'precio_descuento' => $producto_db->precio_descuento,
                 'tienda' => $producto_db->tienda,
                 'imagen' => $producto_db->imagen,
             ];
@@ -316,6 +319,7 @@ Route::get('/ver_carrito', function () {
                 'producto_id' => (int) $producto_id,
                 'nombre' => $producto_db->nombre,
                 'precio' => $producto_db->precio,
+                'precio_descento' => $producto_db->precio_descuento,
                 'tienda' => $producto_db->tienda,
                 'imagen' => $producto_db->imagen,
             ];
@@ -345,3 +349,54 @@ Route::get('/usuario', function () {
     ]);
 
 })->name('ver_usuario');
+
+Route::post('/realizar_pedido', function (Request $request) {
+    // Verificar si el usuario está autenticado
+    if (Cookie::get('usuario') == null) {
+        return redirect()->route('entrar');
+    }
+    // Verificar si se ha enviado el formulario
+   
+
+    // Obtener el ID del usuario desde la cookie
+    $id_usuario = Cookie::get('id_usuario');
+    $precio = $request->total;
+    // Realizar el Reserva de los objetos del carrito
+    $carrito = Cookie::get('carrito', ''); // Ejemplo: "2:5;1:8;3:12;"
+
+    Pedido::realizar_pedido($id_usuario, $carrito);
+
+    // Redirigir al usuario a su perfil con un mensaje de éxito
+    return redirect()->route('ver_pedidos')->with('mensaje', 'Pedido realizado con éxito.');
+})->name('realizar_pedido');
+
+Route::get('/ver_pedidos', function () {
+    // Verificar si el usuario está autenticado
+    if (Cookie::get('usuario') == null) {
+        return redirect()->route('entrar');
+    }
+    // Obtener el ID del usuario desde la cookie
+    $id_usuario = Cookie::get('id_usuario');
+    //traemos nombre, apellido, correo   
+    $usuario = User::find($id_usuario);
+
+    $pedidos = Pedido::get_pedidos_usuario_para_pedidos($id_usuario);
+
+    //ahora sacamos los datos de los elementos de cada pedido
+
+    //para eso hay que sacar el primer id de cada pedido  con el ya sabemos que tienda es
+    $tiendas = [];
+    foreach ($pedidos as $key => $pedido) {
+        $elementos = explode(':', $pedido->elementos)[0]; //separamos los elementos del pedido
+        $tienda = Tienda::get_tienda_id_prod($elementos);
+        array_push($tiendas, $tienda);
+    }
+
+
+    return view('ver_pedidos', [
+        'usuario' => $usuario,
+        'pedidos' => $pedidos,
+        'tiendas' => $tiendas,
+    ]);
+
+})->name('ver_pedidos');

@@ -26,7 +26,9 @@
             <img src="{{ asset('images/icons/Search.svg') }}" alt="User" class="w-8 h-8  object-cover">
         </button>
       </div>
-
+      <a href="/ver_pedidos" class="relative">
+        <img src="{{ asset('images/icons/pedidos.svg') }}" alt="User" class="w-8 h-8 object-cover">
+      </a>
       <a href="/ver_carrito" class="relative">
         <img src="{{ asset('images/icons/ShoppingCart.svg') }}" alt="User" class="w-8 h-8 object-cover">
       </a>

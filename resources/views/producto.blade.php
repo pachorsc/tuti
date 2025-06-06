@@ -26,15 +26,16 @@
         </div>
     @endif
     <main>
-        
+
         <div class="p-4 max-w-7xl mx-auto mt-2">
             <!-- Sección Principal -->
             <div class="flex flex-col lg:flex-row gap-6">
                 <!-- Imágenes laterales -->
                 <div class="flex lg:flex-col gap-2 order-2 lg:order-1">
-                    
+
                     <div class="w-16 h-16 shadow">
-                        <img class="w-full" src="{{ asset($datos_producto->imagen) }}" alt="{{ $datos_producto->nombre }}">
+                        <img class="w-full" src="{{ asset($datos_producto->imagen) }}"
+                            alt="{{ $datos_producto->nombre }}">
                     </div>
 
                 </div>
@@ -42,7 +43,7 @@
                 <!-- Imagen principal -->
                 <div class="flex-1 order-1 lg:order-2 shadow">
                     <div class="aspect-square w-full">
-                        <img src="{{ asset( $datos_producto->imagen) }}" alt="Imagen del producto"
+                        <img src="{{ asset($datos_producto->imagen) }}" alt="Imagen del producto"
                             class="w-full h-full object-cover">
                     </div>
                 </div>
@@ -53,25 +54,35 @@
                     <p class="text-gray-600 text-sm">
                         {{ $datos_producto->descripcion }}
                     </p>
-                    <p class="text-sm text-gray-800 font-medium"><strong>Precio: </strong> {{$datos_producto->precio}}€</p>
+
+                    <p class="text-sm text-gray-800 font-medium"><strong>Precio: </strong>
+                        @if($datos_producto->precio_descuento)
+                            <span class="line-through text-red-400 mr-2">{{ $datos_producto->precio }}€</span>
+                            <span class="text-green-600 font-bold">{{ $datos_producto->precio_descuento }}</span>
+                        @else
+                            {{ $datos_producto->precio }}
+                        @endif €
+                    </p>
                     @if ($is_producto)
-                    <p class="text-sm text-gray-800 font-medium"><strong>Color: </strong>{{$datos_producto->color}}</p>
-                    <p class="text-sm text-gray-800 font-medium"><strong>Stock: </strong> {{$datos_producto->cantidad}}</p>
+                        <p class="text-sm text-gray-800 font-medium"><strong>Color: </strong>{{$datos_producto->color}}</p>
+                        <p class="text-sm text-gray-800 font-medium"><strong>Stock: </strong> {{$datos_producto->cantidad}}
+                        </p>
                     @else
-                    <p><strong>Horario: </strong>{{$datos_producto->horario_disp}}</p>
+                        <p><strong>Horario: </strong>{{$datos_producto->horario_disp}}</p>
                     @endif
                     @if (!$iniciado)
                         <a href="/entrar" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded inline-block">
-                        Iniciar Sesión para Reservar
-                    </a>
+                            Iniciar Sesión para Reservar
+                        </a>
                     @elseif (Cookie::get('vendedor') != null)
-                    <a class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded inline-block">
-                        Reservar
-                    </a>
+                        <a class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded inline-block">
+                            Reservar
+                        </a>
                     @else
-                    <a href="{{ asset('/reserva/'.$datos_producto->nombre.'/'. $datos_producto->id) }}" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded inline-block">
-                        Reservar
-                    </a>
+                        <a href="{{ asset('/reserva/' . $datos_producto->nombre . '/' . $datos_producto->id) }}"
+                            class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded inline-block">
+                            Reservar
+                        </a>
                     @endif
                 </div>
             </div>
@@ -81,11 +92,13 @@
                 <h3 class="text-lg font-semibold mb-4">Productos Relacionados</h3>
                 <div class="bg-gray-200 p-4 ">
                     <div class="flex gap-4 min-w-max flex-col md:flex-row">
-                        @foreach ($otros_productos as $producto )
-                        <a href="{{ asset('/producto/'.$producto->nombre.'/'. $producto->id) }}" class="flex justify-center items-center md:w-1/5 h-32 bg-cover bg-center bg-[url({{ asset($producto->imagen) }})]">
-                            <span class="text-white font-bold transition-transform duration-300 hover:scale-105 bg-[#EEC643] p-2 rounded-3xl text-center">{{$producto->nombre}}</span>
-                        </a>
-                            
+                        @foreach ($otros_productos as $producto)
+                            <a href="{{ asset('/producto/' . $producto->nombre . '/' . $producto->id) }}"
+                                class="flex justify-center items-center md:w-1/5 h-32 bg-cover bg-center bg-[url({{ asset($producto->imagen) }})]">
+                                <span
+                                    class="text-white font-bold transition-transform duration-300 hover:scale-105 bg-[#EEC643] p-2 rounded-3xl text-center">{{$producto->nombre}}</span>
+                            </a>
+
                         @endforeach
                     </div>
                 </div>

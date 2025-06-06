@@ -12,7 +12,7 @@ use App\Models\Post;
 
 class Tiendas_cercanas_controller extends Controller
 {
-    public static function tiendas_cercanas(Request $request)
+     static public function tiendas_cercanas(Request $request)
     {
         $coordenada = $request->input('coordenada', '-3.60667;37.18817'); // valor por defecto si no hay coordenada
         $tiendas = Coordenadas::top10_tiendas_cercanas($coordenada);

@@ -29,44 +29,53 @@
 
                 <div class="flex-1 text-center sm:text-left">
                     <p class="font-bold text-black">{{$nombre}}</p>
+                    <p class="text-sm text-gray-800 font-medium">
+                        <strong>Precio: </strong>
+                        @if($producto[0]->precio_descuento)
+                            <span class="line-through font-light text-red-400 mr-2">{{ $producto[0]->precio }}€</span>
+                            <span class="text-black font-bold">{{ $producto[0]->precio_descuento }}€</span>
+                        @else
+                            {{ $producto[0]->precio }}€
+                        @endif
+                    </p>
                 </div>
 
                 @if ($producto[1])
-                    <form action="/reservar_producto" method="post">
-                        @csrf
-                        <div x-data="{ cantidad: 1 }" class="flex items-center space-x-2">
-                            <button class="px-2 py-1 bg-gray-200 rounded" @click="if(cantidad > 1)cantidad--"
-                                type="button">-</button>
+                        <form action="/reservar_producto" method="post">
+                            @csrf
+                            <div x-data="{ cantidad: 1 }" class="flex items-center space-x-2">
+                                <button class="px-2 py-1 bg-gray-200 rounded" @click="if(cantidad > 1)cantidad--"
+                                    type="button">-</button>
 
-                            <input type="number" name="cantidad" :value="cantidad" readonly
-                                class="w-10 text-center border rounded bg-white" />
-                                
+                                <input type="number" name="cantidad" :value="cantidad" readonly
+                                    class="w-10 text-center border rounded bg-white" />
+
                                 <button class="px-2 py-1 bg-gray-200 rounded"
-                                @click="if(cantidad < {{ $producto[0]->cantidad }}) cantidad++" type="button">+</button>
+                                    @click="if(cantidad < {{ $producto[0]->cantidad }}) cantidad++" type="button">+</button>
                             </div>
-                            
-                           
-            </div>
-                        <div class="text-center sm:text-left">
-                            <p class="font-semibold">Método de pago</p>
-                            <div class="inline-block relative">
-                                <select class="appearance-none px-4 py-2 pr-8 rounded bg-gray-200">
-                                    <option>En tienda</option>
-                                </select>
-                                <div class="absolute right-2 top-2 pointer-events-none">
-                                    <span class="text-sm">⬇</span>
-                                </div>
+
+
+                    </div>
+                    <div class="text-center sm:text-left">
+                        <p class="font-semibold">Método de pago</p>
+                        <div class="inline-block relative">
+                            <select class="appearance-none px-4 py-2 pr-8 rounded bg-gray-200">
+                                <option>En tienda</option>
+                            </select>
+                            <div class="absolute right-2 top-2 pointer-events-none">
+                                <span class="text-sm">⬇</span>
                             </div>
                         </div>
-                        <input type="number" hidden name="producto" value="{{ $producto[0]->id }}">
-                        <div class="text-center">
-                            <button type="submit" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">
-                                Añadir al carrito
-                            </button>
-                        </div>
+                    </div>
+                    <input type="number" hidden name="producto" value="{{ $producto[0]->id }}">
+                    <div class="text-center">
+                        <button type="submit" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">
+                            Añadir al carrito
+                        </button>
+                    </div>
                     </form>
-            @else
-            </div>
+                @else
+                </div>
                 <h3>Debido a que este servicio depende de la disponibilidad de la tienda este tipo de servicios se reservan
                     directamente con la tienda</h3>
 

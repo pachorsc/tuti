@@ -21,7 +21,9 @@
     <main class="max-w-5xl mx-auto p-6">
         <h1 class="text-2xl font-bold mb-6">Carrito</h1>
         <div class="bg-gray-200 p-6 rounded mb-8">
+
             @foreach($carrito as $item)
+
                 <div class="flex items-center bg-white rounded mb-6 p-4 shadow">
                     <div class="w-24 h-24 bg-gray-300 flex items-center justify-center mr-4 rounded">
                         @if(isset($item['imagen']))
@@ -37,11 +39,17 @@
                     </div>
                     <div class="flex-1">
                         <p class="font-semibold text-lg">{{ $item['nombre'] }}</p>
-                        <p class="text-sm text-gray-600">Tienda: {{ $item['tienda'] }}</p>
-                        <p class="text-sm text-gray-700">Pago: tarjeta</p>
                     </div>
                     <div class="text-right min-w-[120px]">
-                        <p class="font-semibold text-lg">{{ $item['precio'] }}€ x {{ $item['cantidad'] }}</p>
+                        <p class="font-semibold text-lg">
+                            @if(isset($item['precio_descuento']) && $item['precio_descuento'])
+                                <span class="line-through text-red-400 mr-2">{{ $item['precio'] }}€</span>
+                                <span class="text-green-600 font-bold">{{ $item['precio_descuento'] }}€</span>
+                            @else
+                                {{ $item['precio'] }}€
+                            @endif
+                            x {{ $item['cantidad'] }}
+                        </p>
                     </div>
                 </div>
             @endforeach
@@ -50,7 +58,11 @@
         @php
             $total = 0;
             foreach ($carrito as $item) {
-                $total += $item['precio'] * $item['cantidad'];
+                if (isset($item['precio_descuento'])) {
+                    $total += $item['precio_descuento'] * $item['cantidad'];
+                } else {
+                    $total += $item['precio'] * $item['cantidad'];
+                }
             }
         @endphp
 
@@ -68,8 +80,21 @@
                 <p class="text-xs">Descuento Total: <span x-text="descuento.toFixed(2) + '€'"></span></p>
             </div>
             <div class="text-right mt-4">
-                <p class="mb-2">Total a pagar: <span x-text="(total - descuento).toFixed(2) + ' €'"></span></p>
-                <button class="bg-gray-400 text-white px-6 py-2 rounded hover:bg-gray-500">Reservar</button>
+                <p class="text-lg font-semibold">Total a pagar: <span
+                        x-text="(total - descuento).toFixed(2) + '€'"></span></p>
+                <form method="POST" action="/realizar_pedido">
+                    @csrf
+                    <input type="hidden" name="total" :value="total - descuento">
+                    @if ($carrito ==null)
+                         <button type="button" class="bg-gray-400 text-white px-6 py-2 rounded hover:bg-gray-500">
+                        Reservar
+                    </button>
+                    @else
+                    <button type="submit" class="bg-gray-400 text-white px-6 py-2 rounded hover:bg-gray-500">
+                        Reservar
+                    </button>
+                    @endif
+                </form>
             </div>
         </div>
     </main>
@@ -78,37 +103,37 @@
         <x-footer></x-footer>
     </footer>
     <script>
-    function carritoSeguro(totalInicial) {
-        return {
-            codigo: '',
-            porcentaje: 0,
-            descuento: 0,
-            total: totalInicial,
+        function carritoSeguro(totalInicial) {
+            return {
+                codigo: '',
+                porcentaje: 0,
+                descuento: 0,
+                total: totalInicial,
 
-            async aplicarDescuento() {
-                const res = await fetch('/api/verificar-descuento', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({ codigo: this.codigo })
-                });
+                async aplicarDescuento() {
+                    const res = await fetch('/api/verificar-descuento', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({ codigo: this.codigo })
+                    });
 
-                const data = await res.json();
+                    const data = await res.json();
 
-                if (res.ok && data.valido) {
-                    this.porcentaje = data.porcentaje;
-                    this.descuento = this.total * (this.porcentaje / 100);
-                } else {
-                    this.porcentaje = 0;
-                    this.descuento = 0;
-                    alert(data.mensaje || 'Código no válido.');
+                    if (res.ok && data.valido) {
+                        this.porcentaje = data.porcentaje;
+                        this.descuento = this.total * (this.porcentaje / 100);
+                    } else {
+                        this.porcentaje = 0;
+                        this.descuento = 0;
+                        alert(data.mensaje || 'Código no válido.');
+                    }
                 }
             }
         }
-    }
-</script>
+    </script>
 </body>
 
 </html>
