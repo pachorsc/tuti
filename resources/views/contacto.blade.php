@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <div class="bg-[#AD5D4E] py-10 h-[80vh] flex flex-col items-center justify-center ">
+    <div class="bg-[#AD5D4E] py-10 min-h-[80vh] flex flex-col items-center justify-center ">
       <div class="mb-4">
         <img src="{{ asset('images/icons/Store.svg') }}" alt="" class="w-[10dvw]">
       </div>

@@ -18,10 +18,14 @@ class FormularioController extends Controller
 
         try {
             // Enviar correo
-            Mail::send('/contacto', $datos, function ($message) use ($datos) {
-                $message->to('destinatario@correo.com') // Cambia por tu correo
-                        ->subject('Nuevo formulario enviado');
-            });
+            $from = "pachoweb@pachoweb.es";
+            $to = "pachoweb@pachoweb.es";
+            $subject = "Formulario Contacto Pachoweb";
+            $message = "nombre: " . $datos['nombre'] . " " . $datos['apellidos'] . " Correo: " . $datos['correo'] . " telefono: " . $datos['telefono'];
+            $headers = "From: " . $from . "\r\n";
+            $headers .= "MIME-Version: 1.0\r\n";
+            $headers .= "Content-type: text/plain; charset=UTF-8\r\n";
+            mail($to, $subject, $message, $headers);
 
             return view('contacto', ['success' => true]); // Enviar booleano a la vista
         } catch (Exception $e) {
