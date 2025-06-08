@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <x-head></x-head>
 
-<body class="" x-data="{ cargando: true }" x-init="
+<body class="bg-gray-50" x-data="{ cargando: true }" x-init="
     let timeout = setTimeout(() => { cargando = false }, 5000); // Oculta el loader tras 5 segundos
     navigator.geolocation.getCurrentPosition(
         function() { cargando = false; clearTimeout(timeout); },
@@ -30,11 +30,11 @@
     @endif
     <main class="container mx-auto p-4">
 
-        <body class="bg-gray-100 text-gray-800">
+        <body class="bg-gray-100 text-gray-800 container mx-auto p-4">
 
             <!-- Tiendas cercanas -->
             <section class="container mx-auto p-4 my-2">
-                <h1 class="text-3xl font-semibold my-2">Tiendas cercanas</h1>
+                <h1 class="text-3xl font-semibold my-5">Tiendas cercanas</h1>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     @foreach ($datos['tiendas_cercanas'] as $tienda)
                         <x-tienda :nombre="$tienda['nombre']" :imagen="$tienda['imagen']" :id="$tienda['id']"></x-tienda>
@@ -45,7 +45,7 @@
             <!-- Ofertas de la semana -->
             <section class="container mx-auto p-4">
                 <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-semibold">Ofertas de la semana</h2>
+                    <h2 class="text-3xl font-semibold my-5">Ofertas de la semana</h2>
                     <a href="/ver_ofertas/?tiendas={{ implode(',', array_column($datos['tiendas_cercanas'], 'id')) }}" class="text-blue-500 text-sm">Ver más →</a>
                 </div>
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -63,8 +63,37 @@
                 </div>
             </section>
 
+            
+
+            <!-- Categorías -->
+            <section class="container flex flex-col mx-auto p-4 gap-4">
+                <h1 class="text-3xl font-semibold my-5">Categorías cercanas</h1>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    @foreach ($datos['categorias'] as $categoria)
+                        <a href="{{ '/blog/categoria/' . $categoria['nombre'] }}"
+                            class=" h-40 flex flex-col items-center justify-center shadow-2xl rounded-lg transition-transform duration-300 hover:scale-105">
+                            <div class="w-full h-full overflow-hidden rounded-t-lg">
+                                <img class="w-full h-full object-cover" src="{{ $categoria['imagen'] }}" alt="">
+                            </div>
+                            <span class="font-bold text-xl  p-2 rounded-3xl text-center">{{ $categoria['nombre'] }}
+                            </span>
+                        </a>
+                    @endforeach
+                </div>
+
+            </section>
+
+
+
             <!-- Post Principal y Secundarios -->
-            <section class="container min-h-[50vh] mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <section class="mb-4">
+                <h2>
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-3xl font-semibold my-5">Últimos posts</span>
+                    <a href="/blog" class="text-blue-500 text-sm">Ver más →</a>
+                    </div>
+                </h2>
+                <div class="container min-h-[50vh] mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
                 <a href="{{ '/blog/' . $datos['posts'][0]->id }}"
                     class="rounded transition-transform duration-300 hover:scale-105 lg:col-span-2 h-full shadow-lg flex flex-col items-center justify-center">
                     <div class="w-full h-full overflow-hidden rounded-t-lg">
@@ -92,37 +121,7 @@
                         <span class=" font-bold text-xl  w-full text-center">{{ $datos['posts'][2]->titulo }}</span>
                     </a>
                 </div>
-            </section>
-
-            <!-- Categorías -->
-            <section class="container flex flex-col mx-auto p-4 gap-4">
-                <h1 class="text-xl font-semibold">Categorías cercanas</h1>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                    @foreach ($datos['categorias'] as $categoria)
-                        <a href="{{ '/blog/categoria/' . $categoria['nombre'] }}"
-                            class=" h-40 flex flex-col items-center justify-center shadow-lg rounded-lg transition-transform duration-300 hover:scale-105">
-                            <div class="w-full h-full overflow-hidden rounded-t-lg">
-                                <img class="w-full h-full object-cover" src="{{ $categoria['imagen'] }}" alt="">
-                            </div>
-                            <span class="font-bold text-xl  p-2 rounded-3xl text-center">{{ $categoria['nombre'] }}
-                            </span>
-                        </a>
-                    @endforeach
-                </div>
-
-            </section>
-
-            <!-- Suscripción -->
-            <section class="container mx-auto p-4">
-                <div class="bg-[#247BA0] p-4 flex flex-col sm:flex-row items-center justify-center space-x-5z gap-4">
-                    <span class="text-lg font-semibold">Suscríbete y sabras todas las novedades de las tiendas cerca de
-                        ti</span>
-                    <div class="flex  w-full sm:w-auto">
-                        <input type="email" placeholder="Tu correo"
-                            class="p-2 border border-gray-400 rounded-l w-full sm:w-auto" />
-                        <button class="bg-gray-500 text-white px-4 rounded-r">Entrar</button>
-                    </div>
-                </div>
+            </div>
             </section>
 
         </body>

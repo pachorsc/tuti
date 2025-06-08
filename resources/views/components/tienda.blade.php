@@ -1,4 +1,4 @@
-<div class=" rounded-lg shadow flex flex-col items-center p-6 w-72 mx-auto shadow-lg transition-transform duration-300 hover:scale-105">
+<div class=" rounded-lg shadow-2xl  flex flex-col items-center p-6 w-72 mx-auto transition-transform duration-300 hover:scale-105">
     <div class="w-40 h-40  rounded-full flex items-center justify-center mb-6 overflow-hidden">
         @if(isset($imagen) && $imagen)
             <img src="{{ asset($imagen) }}" alt="{{ $nombre }}" class="object-cover w-full h-full rounded-full">
