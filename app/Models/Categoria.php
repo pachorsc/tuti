@@ -10,7 +10,7 @@ class Categoria extends Model
     public static function getCategorias()
     {
         return DB::table('categorias')
-            ->select('nombre', 'imagen')
+            ->select('id', 'nombre', 'imagen')
             ->orderBy('nombre', 'asc') // Ordena por nombre
             //->inRandomOrder() // Selecciona los registros en orden aleatorio
             ->get();
@@ -64,5 +64,28 @@ class Categoria extends Model
             'nombre' => ucfirst(strtolower($nombre)),
             'imagen' => 'images/categorias/'.$nombreArchivo,            
         ]);
+    }
+
+    public static function delete_categoria($id_categoria)
+    {
+        //si la categoria está siendo usada no la eliminamos
+        $tienda = DB::table('tienda')->where('tipo', $id_categoria)->first();
+        if ($tienda) {
+            // Si la categoría está siendo usada por una tienda, no la eliminamos
+            return false;
+        }
+        // Primero, obtenemos la categoría para eliminar su imagen
+        $categoria = DB::table('categorias')->where('id', $id_categoria)->first();
+
+        if ($categoria) {
+            // Eliminamos la imagen del servidor
+            if (Storage::exists($categoria->imagen)) {
+                Storage::delete($categoria->imagen);
+            }
+
+            // Luego, eliminamos la categoría de la base de datos
+            DB::table('categorias')->where('id', $id_categoria)->delete();
+        }
+        return true; // Retornamos true si la categoría fue eliminada correctamente
     }
 }

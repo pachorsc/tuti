@@ -10,6 +10,6 @@
         <span class="text-xl font-bold text-black">{{ $nombre }}</span>
     </div>
     <div class="mt-auto">
-        <a href="/vertienda/{{ $id }}" class="bg-gray-300 text-black font-semibold px-8 py-2 rounded transition hover:bg-gray-400">Ver</a>
+        <a href="/ver_tienda/{{ $id }}" class="bg-gray-300 text-black font-semibold px-8 py-2 rounded transition hover:bg-gray-400">Ver</a>
     </div>
 </div>

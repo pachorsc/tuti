@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Post extends Model
 {
     public static function getPost($id)
-    {   
+    {
         $post = DB::table('post')
             ->join('tienda', 'post.tienda', '=', 'tienda.id') // Relación con tienda
             ->join('categorias', 'tienda.tipo', '=', 'categorias.id') // Relación con categorias
@@ -21,24 +21,24 @@ class Post extends Model
             ->where('post.id', $id)
             ->first(); // Obtiene un solo resultado
 
-            
-            // Separa los títulos, contenidos e imágenes por ';;;'
-            $titulo = explode(';;;', $post->titulo);
-            $contenido = explode(';;;', $post->contenido);
-            $imagen = explode(';;;', trim($post->imagen));
 
-            // Procesa los '***' en cada imagen
-            foreach ($imagen as $i => $img) {
-                if (strpos($img, '***') !== false) {
-                    $imagen[$i] = explode('***', trim($img));
-                }
+        // Separa los títulos, contenidos e imágenes por ';;;'
+        $titulo = explode(';;;', $post->titulo);
+        $contenido = explode(';;;', $post->contenido);
+        $imagen = explode(';;;', trim($post->imagen));
+
+        // Procesa los '***' en cada imagen
+        foreach ($imagen as $i => $img) {
+            if (strpos($img, '***') !== false) {
+                $imagen[$i] = explode('***', trim($img));
             }
+        }
 
-            $post->titulo = $titulo;
-            $post->contenido = $contenido;
-            $post->imagen = $imagen;
-            
-            return $post;
+        $post->titulo = $titulo;
+        $post->contenido = $contenido;
+        $post->imagen = $imagen;
+
+        return $post;
     }
     public static function getPostsWithCategorias($perPage = 2)
     {
@@ -72,35 +72,37 @@ class Post extends Model
     //esto va a sacar los primeros 3 post que necesiamos en la pantalla de inicio
     public static function sacar_Posts_inicio(array $tiendas)
     {
-        
-            $posts = DB::table('post')
+
+        $posts = DB::table('post')
             ->select(
                 'post.id',
                 DB::raw("SUBSTRING_INDEX(post.titulo, ';;;', 1) as titulo"), // Obtiene el texto antes de ';;;'
-                DB::raw("SUBSTRING_INDEX(post.imagen, ';;;', 1) as imagen")  
+                DB::raw("SUBSTRING_INDEX(post.imagen, ';;;', 1) as imagen")
             )
             ->whereIn('post.tienda', $tiendas)
             ->orderBy('fecha_creacion', 'desc') // Ordenar por fecha de creación
             ->limit(6) // Limitar a 6 productos
             ->get();
-        
-        
+
+
         return $posts;
     }
 
-    public static function num_post_tienda($id_usuario) {
+    public static function num_post_tienda($id_usuario)
+    {
 
         $num_posts = DB::table('post')
-        ->join('tienda', 'post.tienda', '=', 'tienda.id')
-        ->join('dueno', 'tienda.id', '=', 'dueno.tienda') // <-- usa 'dueno' aquí
-        ->where('dueno.id', $id_usuario)
-        ->count();
-        
+            ->join('tienda', 'post.tienda', '=', 'tienda.id')
+            ->join('dueno', 'tienda.id', '=', 'dueno.tienda') // <-- usa 'dueno' aquí
+            ->where('dueno.id', $id_usuario)
+            ->count();
 
-    return $num_posts;
+
+        return $num_posts;
     }
 
-    public static function insert_post($id_usuario, $titulos, $parrafos, $imagenes) {
+    public static function insert_post($id_usuario, $titulos, $parrafos, $imagenes)
+    {
         // Obtenemos el id de la tienda del usuario
         $tienda = DB::table('dueno')
             ->join('tienda', 'dueno.tienda', '=', 'tienda.id')
@@ -115,5 +117,26 @@ class Post extends Model
             'contenido' => $parrafos,
             'imagen' => $imagenes,
         ]);
+    }
+
+    public static function traer_posts_tienda($id_tienda)
+    {
+        $posts = DB::table('post')
+            ->select(
+                'id',
+                'titulo',
+                DB::raw("SUBSTRING_INDEX(imagen, ';;;', 1) as imagen")
+            ) // Obtiene el texto antes de ';;;'
+            ->where('tienda', $id_tienda)
+            ->get();
+
+        // Procesar los campos en PHP
+        foreach ($posts as $post) {
+            // Primer imagen antes de ;;; o ***
+            $img = explode(';;;', $post->imagen)[0];
+            $post->imagen = explode('***', $img)[0];
+        }
+
+        return $posts;
     }
 }

@@ -77,4 +77,27 @@ class admin_controller extends Controller
 
         return redirect()->route('admin.admin')->with('success', 'Post eliminado correctamente.');
     }
+
+    function eliminar_categoria() {
+        $categorias = Categoria::getCategorias();
+        return view('admin.eliminar_categoria', ['categorias' => $categorias]);
+    }
+
+    function delete_categoria(Request $request) {
+        $id_categoria = $request->input('categoria_id');
+        
+        //Eliminar la categoria
+        $is_elimidado = Categoria::delete_categoria($id_categoria);
+
+        if ($is_elimidado) {
+            return redirect()->route('admin.admin')->with('success', 'Categoria eliminada correctamente.');
+        } else {
+            return redirect()->route('admin.admin')->with('error', 'No se pudo eliminar la categoria porque está en uso.');
+        }
+    }
+
+    function eliminar_producto() {
+        $tiendas = Tienda::tienda_list_id_nombre();
+        return view('admin.eliminar_producto', ['tiendas' => $tiendas]);
+    }
 }

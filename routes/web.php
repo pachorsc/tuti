@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Models\Tienda;
 use App\Models\Pedido;
 use App\Models\Descuento;
+use App\Models\Post;
 
 
 Route::get('/', function () {
@@ -403,3 +404,13 @@ Route::get('/ver_pedidos', function () {
     ]);
 
 })->name('ver_pedidos');
+
+Route::get('/ver_tienda/{id}', function ($id) {
+    $tienda = Tienda::get_tienda_id_tienda($id);
+    $productos = Elemento::get_elementos_tienda($id);
+    $posts = Post::traer_posts_tienda($id);
+    if (!$tienda) {
+        abort(404);
+    }
+    return view('ver_tienda', ['tienda' => $tienda, 'productos' => $productos, 'posts'=> $posts]);
+})->name('ver_tienda');

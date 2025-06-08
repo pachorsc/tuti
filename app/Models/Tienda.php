@@ -85,7 +85,7 @@ class Tienda extends Model
     public static function get_tienda_id_tienda($id_tienda) {
         return DB::table('tienda')
             ->select('nombre', 'direccion', 'horario', 'tipo', 'imagen')
-            ->where('dueno.id', $id_tienda)
+            ->where('tienda.id', $id_tienda)
             ->first();
     }
     public static function get_tienda_id_prod($elemento_id)

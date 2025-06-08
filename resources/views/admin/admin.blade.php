@@ -28,6 +28,13 @@
         </ul>
       </div>
     @endif
+    @if (session('error'))
+      <div class="alert alert-success">
+        <ul class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+          <li>{{ session('error') }}</li>
+        </ul>
+      </div>
+    @endif
     <div class="container mx-auto my-4">
       <ul class="flex flex-col gap-4 mt-4 justify-center items-center">
         <li class="text-2xl font-bold border-b-2 border-gray-300 hover:bg-gray-200">
@@ -43,16 +50,10 @@
             <a href="/admin/tienda_eliminar_post">Eliminar Posts</a>
         </li>
         <li class="text-2xl font-bold border-b-2 border-gray-300 hover:bg-gray-200">
-          <a href="/admin">Eliminar Comentarios</a>
+          <a href="/admin/eliminar_categoria">Eliminar Categoría</a>
         </li>
         <li class="text-2xl font-bold border-b-2 border-gray-300 hover:bg-gray-200">
-          <a href="/admin">Eliminar Categoría</a>
-        </li>
-        <li class="text-2xl font-bold border-b-2 border-gray-300 hover:bg-gray-200">
-          <a href="/admin">Eliminar Producto</a>
-        </li>
-        <li class="text-2xl font-bold border-b-2 border-gray-300 hover:bg-gray-200">
-          <a href="/admin">Eliminar Productos de la Tienda</a>
+          <a href="/admin/eliminar_producto">Eliminar Productos de la Tienda</a>
         </li>
         <li class="text-2xl font-bold border-b-2 border-red-300 hover:bg-red-200">
           <a href="/cerrar_sesion">Salir</a>

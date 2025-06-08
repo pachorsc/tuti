@@ -44,4 +44,5 @@ class Blog_controller extends Controller
         return view('post', data: ['post' => $post]);
 
     }
+    
 }
