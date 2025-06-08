@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Categoria;
 use App\Models\User;
 use App\Models\Tienda;
+use Illuminate\Support\Facades\DB;
 
 
 
@@ -99,5 +100,19 @@ class admin_controller extends Controller
     function eliminar_producto() {
         $tiendas = Tienda::tienda_list_id_nombre();
         return view('admin.eliminar_producto', ['tiendas' => $tiendas]);
+    }
+    function eliminar_producto_tienda(Request $request) {
+        $id_tienda = $request->input('tienda_id');
+        $productos = Tienda::traer_productos_tienda($id_tienda);
+        
+        return view('admin.eliminar_producto_tienda', ['productos' => $productos]);
+    }
+
+    function delete_producto(Request $request) {
+        //Eliminar el producto
+        
+        Tienda::delete_producto($request->producto_id);
+
+        return redirect()->route('admin.admin')->with('success', 'Producto eliminado correctamente.');
     }
 }

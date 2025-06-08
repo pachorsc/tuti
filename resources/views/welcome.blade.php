@@ -1,21 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Tuti</title>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
-
-    <!-- Styles / Scripts -->
-    <script src="http://cdn.tailwindcss.com"></script>
-    <script src="//unpkg.com/alpinejs" defer></script>
-
-</head>
+<x-head></x-head>
 
 <body class="" x-data="{ cargando: true }" x-init="
     let timeout = setTimeout(() => { cargando = false }, 5000); // Oculta el loader tras 5 segundos
@@ -105,7 +90,7 @@
                     @foreach ($datos['productos']->take(8) as $producto)
                         <a href="{{ '/producto/' . $producto->nombre . '/' . $producto->id }}"
                             class="shadow transition-transform duration-300 hover:scale-105 bg-[url('{{ $producto->imagen }}')] bg-cover bg-center h-32 flex items-center justify-center"><span
-                                class="text-white font-bold text-xl bg-[#EEC643] p-2 rounded-3xl text-center">{{ $producto->nombre }}</span></a>
+                                class="text-white font-bold sm:text-xl text-sm bg-[#EEC643] p-2 rounded-3xl text-center">{{ $producto->nombre }}</span></a>
                     @endforeach
                 </div>
             </section>

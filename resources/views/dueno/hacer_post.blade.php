@@ -1,20 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Tuti</title>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
-
-    <!-- Styles / Scripts -->
-    <script src="http://cdn.tailwindcss.com"></script>
-
-</head>
+<x-head></x-head>
 
 <body class="">
     <header>
@@ -23,7 +10,6 @@
 
     <main class="bg-gray-100 flex items-center justify-center min-h-screen">
         <div class="flex flex-col md:flex-row items-center justify-center gap-8 w-full max-w-5xl p-4">
-            <!-- Formulario -->
             <div class="w-full md:w-1/2 bg-gray-300 p-6 rounded-md shadow-md">
                 <h2 class="text-2xl font-bold text-center mb-4">Crear Post</h2>
                 <form method="POST" action="/vendedor/insert_post" enctype="multipart/form-data">

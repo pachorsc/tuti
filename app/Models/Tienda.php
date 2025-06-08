@@ -82,7 +82,8 @@ class Tienda extends Model
             ->update(['tienda' => $id_tienda]);
 
     }
-    public static function get_tienda_id_tienda($id_tienda) {
+    public static function get_tienda_id_tienda($id_tienda)
+    {
         return DB::table('tienda')
             ->select('nombre', 'direccion', 'horario', 'tipo', 'imagen')
             ->where('tienda.id', $id_tienda)
@@ -95,7 +96,7 @@ class Tienda extends Model
             ->select('tienda.nombre', 'tienda.direccion', 'tienda.horario', 'tienda.imagen', 'tienda.telefono')
             ->where('elemento.id', $elemento_id)
             ->first();
-        
+
 
         return $tienda;
     }
@@ -115,7 +116,7 @@ class Tienda extends Model
         // primero miramos que datos cambiaron
         $antiegua_tienda = DB::table('tienda')
             ->join('dueno', 'tienda.id', '=', 'dueno.tienda')
-            ->select('nombre', 'direccion','coordenada', 'horario', 'tipo', 'imagen', 'telefono')
+            ->select('nombre', 'direccion', 'coordenada', 'horario', 'tipo', 'imagen', 'telefono')
             ->where('dueno.id', $id_usuario)
             ->first();
         if ($antiegua_tienda->nombre != $nombre_nuevo) {
@@ -135,7 +136,7 @@ class Tienda extends Model
         if ($antiegua_tienda->direccion != $direccion_nuevo) {
             //en caso de que cambie la direccion hay que cambiar la coordenada
             $tienda_fin['coordenada'] = Coordenadas::coordenada_por_direccion($direccion_nuevo);
-            
+
             if ($tienda_fin['coordenada'] === null) {
                 // Redirigir de vuelta al formulario con error
                 return redirect()->back()
@@ -165,7 +166,7 @@ class Tienda extends Model
             // Guardar la nueva imagen
             $nombreArchivo = 'principal.' . $imagen_nuevo->getClientOriginalExtension();
             //
-            $nombre_carpeta_nueva =str_replace(' ', '_', $tienda_fin['nombre'] . '_' . $id_usuario);
+            $nombre_carpeta_nueva = str_replace(' ', '_', $tienda_fin['nombre'] . '_' . $id_usuario);
 
             $imagen_nuevo->move(public_path('images/tiendas/' . $nombre_carpeta_nueva), $nombreArchivo);
 
@@ -195,11 +196,51 @@ class Tienda extends Model
         return $tienda;
     }
 
-    public static function get_tienda_id_usu($id_usuario) {
+    public static function get_tienda_id_usu($id_usuario)
+    {
         return DB::table('tienda')
-        ->join('dueno', 'tienda.id', '=', 'dueno.tienda')
-        ->where('dueno.id', $id_usuario)
-        ->select('tienda.*')
-        ->first();
+            ->join('dueno', 'tienda.id', '=', 'dueno.tienda')
+            ->where('dueno.id', $id_usuario)
+            ->select('tienda.*')
+            ->first();
+    }
+
+    public static function traer_productos_tienda($id_tienda)
+    {
+        $productos = DB::table('elemento')
+            ->select('id', 'nombre')
+            ->where('tienda', $id_tienda)
+            ->get();
+
+        return $productos;
+    }
+
+    public static function delete_producto($id_producto)
+    {
+        //eliminamos las imagenes del producto de nuestro sistema de archivos 
+        $imagen = DB::table('elemento')
+            ->select('imagen')
+            ->where('id', $id_producto)
+            ->first();
+
+        //eliminamos la imagen con la ruta
+        $ruta_imagen = public_path($imagen->imagen);
+
+        if (file_exists($ruta_imagen)) {
+            unlink($ruta_imagen);
+        }
+
+        // Eliminar de producto o servicio según corresponda
+        if (DB::table('producto')->where('id', $id_producto)->exists())
+         {
+            DB::table('producto')->where('id', $id_producto)->delete();
+        }
+
+        if (DB::table('servicio')->where('id', $id_producto)->exists())
+         {
+            DB::table('servicio')->where('id', $id_producto)->delete();
+        }
+        // Eliminar de la tabla elemento
+        DB::table('elemento')->where('id', $id_producto)->delete();
     }
 }

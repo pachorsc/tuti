@@ -104,7 +104,7 @@ class vendedor_controller extends Controller
 
         //creamos la carpeta del post dentro de la carpeta de la tienda
         // Obtén el nombre de la tienda del usuario
-        $tienda = Tienda::get_tienda($id_usuario);
+        $tienda = Tienda::get_tienda_id_usu($id_usuario);
         $nombre_tienda = str_replace(' ', '_', $tienda->nombre);
 
         // Crea la carpeta del post dentro de la carpeta de la tienda

@@ -1,27 +1,14 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Tuti</title>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
-
-    <!-- Styles / Scripts -->
-    <script src="http://cdn.tailwindcss.com"></script>
-
-</head>
+<x-head></x-head>
 
 <body class="">
-    <header>
+    
         <x-menu></x-menu>
-    </header>
+    
     <main>
-        <div class="container mx-auto mt-10 mb-10 px-20 ">
+        <div class="container mx-auto mt-10 mb-10 sm:px-20 px-4">
             <div class="flex flex-col items-center justify-center">
                 @for ($index = 0; $index < count($post->titulo); $index++)
                     @if ($index == 0)

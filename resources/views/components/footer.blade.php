@@ -14,13 +14,6 @@
         <p class="text-sm">Texto de copyright</p>
       </div>
   
-      <div class="flex  ">
-        <input type="text" placeholder="Buscar" class="px-3 py-1 outline-none rounded-s-lg">
-        <button dir="rtl" class="bg-[#1f6887] border border-black px-3 rounded-s-lg">
-            <img src="{{ asset('images/icons/Search.svg') }}" alt="User" class="w-8 h-8  object-cover">
-        </button>
-      </div>
-  
     </div>
   </footer>
   
