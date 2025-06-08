@@ -56,7 +56,7 @@
                                 <img class="w-full h-full object-cover" src="{{ explode('***', $producto->imagen)[0] }}"
                                     alt="">
                             </div>
-                            <span class=" font-bold sm:text-xl text-sm p-2 text-center">{{ $producto->nombre }}
+                            <span class=" font-bold sm:text-xl text-sm p-2 text-center">{{ str_replace('_',' ',$producto->nombre) }}
                             </span>
                         </a>
                     @endforeach

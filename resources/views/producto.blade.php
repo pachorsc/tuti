@@ -22,7 +22,7 @@
 
                     <div class="w-16 h-16 shadow">
                         <img class="w-full" src="{{ asset($datos_producto->imagen) }}"
-                            alt="{{ $datos_producto->nombre }}">
+                            alt="{{ str_replace('_',' ',$datos_producto->nombre) }}">
                     </div>
 
                 </div>
@@ -83,7 +83,7 @@
                             <a href="{{ asset('/producto/' . $producto->nombre . '/' . $producto->id) }}"
                                 class="flex justify-center items-center md:w-1/5 h-32 bg-cover bg-center bg-[url({{ asset($producto->imagen) }})]">
                                 <span
-                                    class="text-white font-bold transition-transform duration-300 hover:scale-105 bg-[#EEC643] p-2 rounded-3xl text-center">{{$producto->nombre}}</span>
+                                    class="text-white font-bold transition-transform duration-300 hover:scale-105 bg-[#EEC643] p-2 rounded-3xl text-center">{{str_replace('_',' ',$producto->nombre)}}</span>
                             </a>
 
                         @endforeach
