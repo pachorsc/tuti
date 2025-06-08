@@ -14,6 +14,7 @@ use App\Models\Tienda;
 use App\Models\Pedido;
 use App\Models\Descuento;
 use App\Models\Post;
+use Symfony\Component\Routing\Exception\RouteCircularReferenceException;
 
 
 Route::get('/', function () {
@@ -414,3 +415,23 @@ Route::get('/ver_tienda/{id}', function ($id) {
     }
     return view('ver_tienda', ['tienda' => $tienda, 'productos' => $productos, 'posts'=> $posts]);
 })->name('ver_tienda');
+
+Route::get('/ver_ofertas', function () {
+    $tiendas = explode(',', $_GET['tiendas']);
+    $ofertas = [];
+
+    foreach ($tiendas as $tienda) {
+        array_push($ofertas, Elemento::get_elementos_tienda($tienda));
+    }
+   
+    
+    
+
+    return view('ver_ofertas', [
+        'productos' => $ofertas,
+    ]);
+});
+
+Route::fallback(function () {
+    return redirect()->route('ubicacion');
+});

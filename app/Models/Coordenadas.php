@@ -27,7 +27,14 @@ class Coordenadas extends Model
     
     public static function top10_tiendas_cercanas($posicion_usuario = '-3.60667;37.18817')
     {
+        
+        if (is_null($posicion_usuario) || $posicion_usuario == '') {
+            // Si no se proporciona una posición, se usa una posición por defecto
+            $posicion_usuario = '-3.60667;37.18817'; // Granada, España
+        }
         $posicion_usuario = explode(';', $posicion_usuario);
+
+
         $longitud_usuario = $posicion_usuario[0];
         $latitud_usuario = $posicion_usuario[1];
 

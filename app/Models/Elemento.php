@@ -109,6 +109,13 @@ class Elemento extends Model
             ->where('id', $id_elemento)
             ->first();
     }
+    static function get_elementos($id_tienda)
+    {
+        // Obtener todos los elementos de la tienda
+        return DB::table('elemento')
+            ->whereIn('id', $id_tienda)
+            ->get();
+    }
     static function get_elemento_tienda($id_elemento){
         //dependiendo si es un producto o un servicio, se obtiene el elemento de la tabla correspondiente
         $is_producto = DB::table('producto')
