@@ -70,4 +70,20 @@ class Pedido extends Model
             ->orderBy('fecha_pedido', 'desc')
             ->get();
     }
+    static function get_pedidos_vendedor($id_tienda)
+    {
+        // Obtener los pedidos del vendedor
+        return DB::table('pedido')
+            ->where('tienda', $id_tienda)
+            ->orderBy('fecha_pedido', 'desc')
+            ->get();
+    }
+
+    static function update_estado_pedido_listo($pedidos_id){
+
+        // Actualizar el estado del pedido a "listo"
+        DB::table('pedido')
+            ->whereIn('id', $pedidos_id)
+            ->update(['estado' => 1]); // 1 = listo
+    }
 }

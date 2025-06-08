@@ -20,9 +20,11 @@ Route::get('/', function () {
 })->name('ubicacion');
 
 Route::post('/inicio', function (Request $request) {
-
-    $datos = Tiendas_cercanas_controller::tiendas_cercanas($request);//saca id tiendas, posts y productos de las tiendas cercanas
-    return view('welcome', ['datos' => $datos]);
+    $datos = Tiendas_cercanas_controller::tiendas_cercanas($request);
+    return view('welcome', [
+        'datos' => $datos,
+        'mensaje' => session('mensaje')
+    ]);
 })->name('inicio');
 
 Route::get('/admin', function () {
@@ -397,6 +399,7 @@ Route::get('/ver_pedidos', function () {
         'usuario' => $usuario,
         'pedidos' => $pedidos,
         'tiendas' => $tiendas,
+        'mensaje' => request('mensaje', ''), // Obtener el mensaje de la URL, si existe
     ]);
 
 })->name('ver_pedidos');

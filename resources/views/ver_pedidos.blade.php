@@ -14,11 +14,12 @@
     <script src="//unpkg.com/alpinejs" defer></script>
 </head>
 
-<body class="overflow-x-hidden">
+<body class="overflow-x-hidden h-screen bg-gray-50 text-gray-900 font-sans antialiased">
     <header>
         <x-menu></x-menu>
     </header>
-    <main class="max-w-5xl mx-auto p-6">
+    <main class="max-w-5xl mx-auto p-6 h-screen">
+
         <h1 class="text-2xl font-bold mb-6">Mis pedidos</h1>
 
         @if(session('mensaje'))
@@ -28,8 +29,7 @@
                 {{ session('mensaje') }}
             </div>
         @endif
-
-        @if(count($pedidos) === 0)
+        @if(count($pedidos) == 0)
             <div class="bg-white p-6 rounded shadow text-center text-gray-500">
                 No tienes pedidos realizados.
             </div>
@@ -56,18 +56,19 @@
                                         list($producto_id, $cantidad) = $partes;
                                     @endphp
                                     <span class="inline-block bg-gray-100 rounded px-2 py-1 text-xs mr-1 mb-1">
-                                        x{{ $cantidad }} 
+                                        x{{ $cantidad }}
                                     </span>
                                 @endforeach
                             </p>
                         </div>
                         <div class="flex flex-col items-end gap-2">
-                            <span class="text-lg font-bold text-gray-800">Total: {{ number_format($pedidos[$i]->precio_total, 2) }}
+                            <span class="text-lg font-bold text-gray-800">Total:
+                                {{ number_format($pedidos[$i]->precio_total, 2) }}
                                 €</span>
                             <span class="px-3 py-1 rounded-full text-xs font-semibold
-                                                    @if($pedidos[$i]->estado == false) bg-yellow-100 text-yellow-700
-                                                        @else bg-green-100 text-green-700
-                                                    @endif">
+                                                            @if($pedidos[$i]->estado == false) bg-yellow-100 text-yellow-700
+                                                                @else bg-green-100 text-green-700
+                                                            @endif">
                                 @if($pedidos[$i]->estado == false)
                                     En preparación
                                 @else

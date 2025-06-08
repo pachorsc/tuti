@@ -12,6 +12,7 @@ use App\Models\Servicio;
 use App\Models\Producto;
 use App\Models\Elemento;
 use Illuminate\Support\Facades\DB;
+use App\Models\Pedido;
 
 
 class vendedor_controller extends Controller
@@ -215,7 +216,7 @@ class vendedor_controller extends Controller
 
         // Guardar el producto en la base de datos
         Producto::insert_servicio($request);
-        
+
 
         // Redirigir a la vista de la tienda
         return redirect('/vendedor/tienda')->with('success', 'Producto creado correctamente.');
@@ -281,7 +282,7 @@ class vendedor_controller extends Controller
                 ->where('elemento.id', $elemento_id)
                 ->first();
         }
-        
+
 
         return view('dueno.editar_elemento_form', compact('elemento', 'es_producto'));
 
@@ -313,9 +314,85 @@ class vendedor_controller extends Controller
                 'horario_disp' => 'required|string',
             ]);
         }
-        
+
         Elemento::update_elemento($request, $id_usuario, $is_producto);
         // Redirigir a la vista de la tienda
         return redirect('/vendedor/tienda')->with('success', 'Elemento actualizado correctamente.');
     }
+
+    function pedidos_pendientes()
+    {
+
+        // Obtener los pedidos pendientes del vendedor
+        $id_usuario = Cookie::get('id_usuario');
+        $id_tienda = Usuario_dueno::get_tienda($id_usuario)->tienda;
+        $pedidos = Pedido::get_pedidos_vendedor($id_tienda);
+
+        $elementos = [];
+        $pedidos_fin = []; // este es el array que vamos a devolver a la vista con los datos necesarios
+
+        foreach ($pedidos as $value) {
+            $elementos_str = rtrim($value->elementos, ';');
+            $id_productos_raw = explode(';', $elementos_str);
+            $id_productos = array_map(function ($item) {
+                return explode(':', $item)[0]; // Obtenemos solo el ID del producto
+            }, $id_productos_raw);
+            array_push($elementos, $id_productos);
+            //el total va a ser el precio del producto por la cantidad
+            $total = 0;
+            //sacamos solo las id de los productos
+            $id_productos = array_map(function ($item) {
+                return explode(':', $item)[0]; // Obtenemos solo el ID del producto
+            }, $id_productos_raw);
+            //ahora usamos una funcion para sacar el precio de cada producto
+            $precio_total = array_map(function ($id_producto) {
+                $elemento = Elemento::get_elemento($id_producto);
+                return $elemento->precio_descuento ?? $elemento->precio; 
+            }, $id_productos);
+            $cantidad = array_map(function ($item) {
+                return explode(':', $item)[1]; // Obtenemos solo la cantidad del producto
+            }, $id_productos_raw);
+            $total = array_sum(array_map(function ($precio, $cantidad) {
+                return $precio * $cantidad;
+            }, $precio_total, $cantidad));
+
+            //hacemos un array con los nombres de los productos
+            $nombre_productos = array_map(function ($item) {
+               $elemento = Elemento::get_elemento($item);
+               return $elemento->nombre;
+            }, $id_productos_raw);
+
+            $nombre_cliente = DB::table('usuario')
+                ->where('id', $value->usuario)
+                ->value('nombre');
+
+            $pedido = [
+                'id' => $value->id,
+                'fecha' => $value->fecha_pedido,
+                'estado' => $value->estado,
+                'nombre_cliente' => $nombre_cliente,
+                'nombre_productos' => $nombre_productos, // Mantenemos el formato original
+                'cantidad_productos' => $cantidad, // Mantenemos el formato original
+                'total' => $total,
+            ];
+            array_push($pedidos_fin, $pedido);
+
+        }
+        return view('dueno.pedidos_pendientes')->with('pedidos', $pedidos_fin);
+    }
+
+    function pedidos_listos(Request $request)
+    {
+        // Validar el ID del pedido
+        $request->validate([
+            'listos' => 'required',
+        ]);
+
+        // Actualizar el estado del pedido a "listo"
+        Pedido::update_estado_pedido_listo($request->listos);
+
+        // Redirigir a la vista de pedidos pendientes con un mensaje de éxito
+        return $this->pedidos_pendientes()->with('success', 'Pedido marcado como listo.');
+    }
 }
+

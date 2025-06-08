@@ -55,10 +55,7 @@
             <a href="/vendedor/eliminar_elemento">Eliminar Elemento (Servicio o Producto)</a>
           </li>
           <li class="text-2xl font-bold border-b-2 border-gray-300 hover:bg-gray-200">
-            <a href="">Pedidos Pendientes</a>
-          </li>
-          <li class="text-2xl font-bold border-b-2 border-gray-300 hover:bg-gray-200">
-            <a href="">Reservas Pentientes</a>
+            <a href="/vendedor/pedidos_pendientes">Pedidos Pendientes</a>
           </li>
         @endif
   

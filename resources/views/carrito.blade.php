@@ -70,18 +70,10 @@
             Total: {{ $total }} €
         </div>
 
-        <div class="bg-gray-300 p-6 rounded" x-data="carritoSeguro({{ $total }})">
-            <div>
-                <label class="block text-sm mb-2">Código de descuento</label>
-                <input type="text" x-model="codigo" class="px-2 py-1 rounded border w-40 mb-2">
-                <button @click="aplicarDescuento"
-                    class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 mb-2">Aplicar</button>
-                <p class="text-xs">Porcentaje de descuento: <span x-text="porcentaje + '%'"></span></p>
-                <p class="text-xs">Descuento Total: <span x-text="descuento.toFixed(2) + '€'"></span></p>
-            </div>
+        <div class="bg-gray-300 p-6 rounded " x-data="carritoSeguro({{ $total }})">
+
             <div class="text-right mt-4">
-                <p class="text-lg font-semibold">Total a pagar: <span
-                        x-text="(total - descuento).toFixed(2) + '€'"></span></p>
+                <p class="text-lg font-semibold">Total a pagar: {{$total}} €</p>
                 <form method="POST" action="/realizar_pedido">
                     @csrf
                     <input type="hidden" name="total" :value="total - descuento">
@@ -102,38 +94,7 @@
     <footer>
         <x-footer></x-footer>
     </footer>
-    <script>
-        function carritoSeguro(totalInicial) {
-            return {
-                codigo: '',
-                porcentaje: 0,
-                descuento: 0,
-                total: totalInicial,
 
-                async aplicarDescuento() {
-                    const res = await fetch('/api/verificar-descuento', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({ codigo: this.codigo })
-                    });
-
-                    const data = await res.json();
-
-                    if (res.ok && data.valido) {
-                        this.porcentaje = data.porcentaje;
-                        this.descuento = this.total * (this.porcentaje / 100);
-                    } else {
-                        this.porcentaje = 0;
-                        this.descuento = 0;
-                        alert(data.mensaje || 'Código no válido.');
-                    }
-                }
-            }
-        }
-    </script>
 </body>
 
 </html>
