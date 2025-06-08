@@ -30,25 +30,51 @@
     @endif
 
     <main class="container mx-auto p-4">
-        <h1 class="text-2xl font-bold mb-6 text-center">Ofertas de la semana</h1>
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            
-            @forelse($productos as $producto)
-                @foreach ($producto as $oferta)
+    <h1 class="text-2xl font-bold mb-6 text-center">Ofertas de la semana</h1>
+
+    
+    <div class="mb-6 flex justify-center">
+        <input
+            type="text"
+            id="buscador"
+            placeholder="Buscar producto o servicio..."
+            class="w-full max-w-md border border-gray-300 rounded px-4 py-2"
+            onkeyup="filtrarOfertas()"
+        >
+    </div>
+
+    <div id="ofertasGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        @forelse($productos as $producto)
+            @foreach ($producto as $oferta)
                 <a href="{{ '/producto/' . $oferta->nombre . '/' . $oferta->id }}"
-                    class="shadow-2xl transition-transform duration-300 hover:scale-105 h-40 flex items-center justify-center flex-col bg-white rounded-lg">
+                    class="oferta-card shadow-2xl transition-transform duration-300 hover:scale-105 h-40 flex items-center justify-center flex-col bg-white rounded-lg">
                     <div class="w-full h-24 overflow-hidden rounded-t-lg">
                         <img class="w-full h-full object-cover" src="{{ asset(explode('***', $oferta->imagen)[0]) }}"
                             alt="{{ $oferta->nombre }}">
                     </div>
-                    <span class="font-bold sm:text-xl text-sm p-2 text-center">{{ $oferta->nombre }}</span>
+                    <span class="font-bold sm:text-xl text-sm p-2 text-center nombre-oferta">{{ str_replace('_', ' ', $oferta->nombre) }}</span>
                 </a>
-                @endforeach
-            @empty
-                <div class="col-span-4 text-center text-gray-500">No hay ofertas disponibles.</div>
-            @endforelse
-        </div>
-    </main>
+            @endforeach
+        @empty
+            <div class="col-span-4 text-center text-gray-500">No hay ofertas disponibles.</div>
+        @endforelse
+    </div>
+</main>
+
+<script>
+function filtrarOfertas() {
+    let input = document.getElementById('buscador').value.toLowerCase();
+    let cards = document.querySelectorAll('.oferta-card');
+    cards.forEach(function(card) {
+        let nombre = card.querySelector('.nombre-oferta').textContent.toLowerCase();
+        if (nombre.includes(input)) {
+            card.style.display = '';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+</script>
 
     <footer>
         <x-footer></x-footer>
