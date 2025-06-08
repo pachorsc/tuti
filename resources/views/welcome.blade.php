@@ -110,31 +110,14 @@
                 </div>
             </section>
 
-            <!-- Sección inferior con tarjetas -->
-            <section class="container mx-auto p-4">
-                <h2 class="text-xl font-semibold mb-6">La mejor manera de conecta</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                    <div class="bg-white shadow p-4 rounded text-center">
-                        <div class="bg-gray-300 rounded-full h-24 w-24 mx-auto mb-4 flex items-center justify-center">
-                            Tienda</div>
-                        <h3 class="font-bold text-lg mb-2">nombre</h3>
-                        <p class="text-sm mb-4">Reseña Reseña Reseña Reseña Reseña</p>
-                        <button class="bg-blue-500 text-white px-4 py-1 rounded">leer más</button>
-                    </div>
-                    <div class="bg-white shadow p-4 rounded text-center">
-                        <div class="bg-gray-300 rounded-full h-24 w-24 mx-auto mb-4 flex items-center justify-center">
-                            Producto</div>
-                        <h3 class="font-bold text-lg mb-2">nombre</h3>
-                        <p class="text-sm mb-4">Reseña Reseña Reseña Reseña Reseña</p>
-                        <button class="bg-blue-500 text-white px-4 py-1 rounded">leer más</button>
-                    </div>
-                    <div class="bg-white shadow p-4 rounded text-center">
-                        <div class="bg-gray-300 rounded-full h-24 w-24 mx-auto mb-4 flex items-center justify-center">
-                            Usuario</div>
-                        <h3 class="font-bold text-lg mb-2">nombre</h3>
-                        <p class="text-sm mb-4">Reseña Reseña Reseña Reseña Reseña</p>
-                        <button class="bg-blue-500 text-white px-4 py-1 rounded">leer más</button>
-                    </div>
+            
+            
+            <section class="container mx-auto p-4 my-2">
+                <h2 class="text-xl font-semibold my-2">Tiendas cercanas</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    @foreach ($datos['tiendas_cercanas'] as $tienda)
+                        <x-tienda :nombre="$tienda['nombre']" :imagen="$tienda['imagen']" :id="$tienda['id']"></x-tienda>
+                    @endforeach
                 </div>
             </section>
 

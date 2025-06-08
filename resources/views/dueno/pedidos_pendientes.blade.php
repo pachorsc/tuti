@@ -55,7 +55,6 @@
                                                 <span class="inline-block bg-gray-100 rounded px-2 py-1 text-xs mr-1 mb-1">
                                                     {{ $producto['nombre'] }} (x{{ $producto['cantidad'] }})
                                                 </span>
-                                                
                                             @endfor
                                         </p>
                                         <p class="mb-2"><strong>Total:</strong> ${{ $pedidos[$index]['total']  }}</p>

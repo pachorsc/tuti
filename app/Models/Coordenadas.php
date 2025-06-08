@@ -32,7 +32,7 @@ class Coordenadas extends Model
         $latitud_usuario = $posicion_usuario[1];
 
         //saco todas las coordenadas de las tiendas
-        $coordenadas = DB::table('tienda')->select('id', 'coordenada')->get();
+        $coordenadas = DB::table('tienda')->select('id', 'coordenada', 'nombre', 'imagen')->get();
         $tiendas = [];
         foreach ($coordenadas as $tienda) {
             $coordenada = explode(';', $tienda->coordenada);
@@ -45,6 +45,8 @@ class Coordenadas extends Model
             // Almaceno la tienda y su distancia
             array_push($tiendas, [
                 'id' => $tienda->id,
+                'nombre' => $tienda->nombre,
+                'imagen' => $tienda->imagen,
                 'distancia' => $distancia
             ]);
 
@@ -54,9 +56,9 @@ class Coordenadas extends Model
         usort($tiendas, function($a, $b) {
             return $a['distancia'] <=> $b['distancia'];
         });
-
+        
         // Devolver solo los IDs de las 10 tiendas más cercanas
-        return array_column(array_slice($tiendas, 0, 10), 'id');
+        return array_slice($tiendas, 0, 10);
     }
     
     public static function distanciaHaversine($lat1, $lon1, $lat2, $lon2)

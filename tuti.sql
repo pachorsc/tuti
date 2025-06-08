@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-06-2025 a las 23:26:58
+-- Tiempo de generación: 08-06-2025 a las 11:41:21
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -69,6 +69,26 @@ INSERT INTO `comprador` (`id`, `telefono`, `tipo`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `descuento`
+--
+
+CREATE TABLE `descuento` (
+  `codigo` varchar(12) NOT NULL,
+  `descuento` int(2) NOT NULL,
+  `fecha_fin` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `descuento`
+--
+
+INSERT INTO `descuento` (`codigo`, `descuento`, `fecha_fin`) VALUES
+('NAVIDAD20', 20, '2025-12-31'),
+('TUTI10', 10, '2025-06-30');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `dueno`
 --
 
@@ -116,18 +136,18 @@ INSERT INTO `elemento` (`id`, `tienda`, `nombre`, `descripcion`, `precio`, `prec
 (16, 5, 'Plátano de canarias', 'Plátano directamente de canarias', 2.00, NULL, 'images/tiendas/Frutería_Rosi_3/productos/elemento_Plátano_de_canarias.jpg', NULL),
 (17, 5, 'Naranja', 'Naranja para comer', 1.60, NULL, 'images/tiendas/Frutería_Rosi_3/productos/elemento_Naranja.jpg', NULL),
 (21, 6, 'Abrir_cerraduras', 'se abren cerraduras siempre que se vea que es tu casa', 60.00, NULL, 'images/tiendas/CerrajeríaToni_4/servicios/servicio_Abrir_cerraduras.jpg', NULL),
-(22, 6, 'llave_maestra', 'llave que abre casi todas las cerraduras de nivel 1', 25.00, NULL, 'images/tiendas/CerrajeríaToni_4/productos/producto_llave_maestra.jpg', NULL),
+(22, 6, 'llave_maestra', 'llave que abre casi todas las cerraduras de nivel 1', 25.00, 23.00, 'images/tiendas/CerrajeríaToni_4/productos/producto_llave_maestra.jpg', NULL),
 (23, 6, 'Duplicado_de_llaves', 'duplicamos llaves de hasta nivel 2', 12.00, NULL, 'images/tiendas/CerrajeríaToni_4/servicios/servicio_Duplicado_de_llaves.jpg', NULL),
-(24, 6, 'llavero_con_GPS', 'llavero con GPS rastreable desde móvil', 25.00, NULL, 'images/tiendas/CerrajeríaToni_4/productos/producto_llavero_con_GPS.jpg', NULL),
+(24, 6, 'llavero_con_GPS', 'llavero con GPS rastreable desde móvil', 25.00, 20.00, 'images/tiendas/CerrajeríaToni_4/productos/producto_llavero_con_GPS.jpg', NULL),
 (25, 6, 'Candados_de_clave', 'candados con clave de 4 digitos', 12.00, NULL, 'images/tiendas/CerrajeríaToni_4/productos/producto_Candados_de_clave.jpg', NULL),
 (26, 6, 'Romper_cadenas_por_perdida_de_llave', 'Se rompen cadenas por perdida de llave', 40.00, NULL, 'images/tiendas/CerrajeríaToni_4/servicios/servicio_Romper_cadenas_por_perdida_de_llave.jpg', NULL),
-(27, 7, 'Corte_de_pelo_Hombre', 'Corte de pelo Hombre con lavado y peinado', 13.00, NULL, 'images/tiendas/Peluquería_y_estética_Paqui_5/servicios/servicio_Corte_de_pelo_Hombre.jpg', NULL),
-(28, 7, 'Shampoo_anti-caida', 'Mejor shampoo anti-caida del mercado con miel', 11.56, NULL, 'images/tiendas/Peluquería_y_estética_Paqui_5/productos/producto_Shampoo_anti-caida.jpg', NULL),
+(27, 7, 'Corte_de_pelo_Hombre', 'Corte de pelo Hombre con lavado y peinado', 13.00, 9.00, 'images/tiendas/Peluquería_y_estética_Paqui_5/servicios/servicio_Corte_de_pelo_Hombre.jpg', NULL),
+(28, 7, 'Shampoo_anti-caida', 'Mejor shampoo anti-caida del mercado con miel', 11.56, 10.00, 'images/tiendas/Peluquería_y_estética_Paqui_5/productos/producto_Shampoo_anti-caida.jpg', NULL),
 (29, 7, 'Corte_pelo_mujer', 'Corte de pelo para mujer con masaje capilar y peinado', 15.00, NULL, 'images/tiendas/Peluquería_y_estética_Paqui_5/servicios/servicio_Corte_pelo_mujer.jpg', NULL),
-(30, 7, 'Aceite_para_pelo', 'Aceite para reforzar el pelo y hacerlo mas brillante', 8.00, NULL, 'images/tiendas/Peluquería_y_estética_Paqui_5/productos/producto_Aceite_para_pelo.jpg', NULL),
-(31, 8, 'Generados_Gasolina', 'Generador de energía que funciona con gasolina', 60.00, NULL, 'images/tiendas/Casa_de_la_electrónica_6/productos/producto_Generados_Gasolina.jpg', NULL),
-(32, 8, 'Reparación_de_teléfonos', 'Reparamos todo tipo de teléfonos', 50.00, NULL, 'images/tiendas/Casa_de_la_electrónica_6/servicios/servicio_Reparación_de_teléfonos.jpg', NULL),
-(33, 8, 'Torre_PC', 'Dell OptiPlex 7040 MT Core i5 3.2 GHz - SSD 128 GB RAM 16 GB', 199.00, NULL, 'images/tiendas/Casa_de_la_electrónica_6/productos/producto_Torre_PC.jpg', NULL),
+(30, 7, 'Aceite_para_pelo', 'Aceite para reforzar el pelo y hacerlo mas brillante', 8.00, 7.00, 'images/tiendas/Peluquería_y_estética_Paqui_5/productos/producto_Aceite_para_pelo.jpg', NULL),
+(31, 8, 'Generados_Gasolina', 'Generador de energía que funciona con gasolina', 60.00, 55.00, 'images/tiendas/Casa_de_la_electrónica_6/productos/producto_Generados_Gasolina.jpg', NULL),
+(32, 8, 'Reparación_de_teléfonos', 'Reparamos todo tipo de teléfonos', 50.00, 45.00, 'images/tiendas/Casa_de_la_electrónica_6/servicios/servicio_Reparación_de_teléfonos.jpg', NULL),
+(33, 8, 'Torre_PC', 'Dell OptiPlex 7040 MT Core i5 3.2 GHz - SSD 128 GB RAM 16 GB', 199.00, 170.00, 'images/tiendas/Casa_de_la_electrónica_6/productos/producto_Torre_PC.jpg', NULL),
 (34, 8, 'Reparación_de_lavadoras', 'Reparamos todo tipo de lavadoras', 50.00, NULL, 'images/tiendas/Casa_de_la_electrónica_6/servicios/servicio_Reparación_de_lavadoras.jpg', NULL),
 (35, 9, 'productos_para_dormir', 'Asesoria para productos para dormir', 8.00, NULL, 'images/tiendas/Farmacia_del_carmen_7/servicios/servicio_productos_para_dormir.jpg', NULL),
 (36, 9, 'Adelgazante', 'Adelgazin es un producto que absorbe la grasa abdominal', 15.00, NULL, 'images/tiendas/Farmacia_del_carmen_7/productos/producto_Adelgazante.jpg', NULL);
@@ -140,12 +160,21 @@ INSERT INTO `elemento` (`id`, `tienda`, `nombre`, `descripcion`, `precio`, `prec
 
 CREATE TABLE `pedido` (
   `id` int(11) NOT NULL,
+  `tienda` int(11) NOT NULL,
   `elementos` varchar(200) NOT NULL,
   `usuario` int(11) NOT NULL,
   `fecha_pedido` timestamp NOT NULL DEFAULT current_timestamp(),
   `precio_total` decimal(10,2) NOT NULL,
   `estado` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `pedido`
+--
+
+INSERT INTO `pedido` (`id`, `tienda`, `elementos`, `usuario`, `fecha_pedido`, `precio_total`, `estado`) VALUES
+(12, 6, '24:1;22:1;25:1;', 1, '2025-06-06 10:56:04', 55.00, 1),
+(13, 7, '30:1;', 1, '2025-06-06 10:56:04', 7.00, 1);
 
 -- --------------------------------------------------------
 
@@ -311,9 +340,9 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `fecha_creacion`, `nombre`, `correo`, `apellido`, `contrasena`) VALUES
-(1, '2025-05-20 06:07:50', 'Juan', 'prueba1@gmail.com', 'Rodríguez', '$2y$12$4Oo9PLFOj99jQCf9rRw9Y.gilQ6/86.bleGw4MphmFaMw.DNphEaa'),
+(1, '2025-05-20 06:07:50', 'Juan francisco', 'prueba1@gmail.com', 'Rodríguez', '$2y$12$4Oo9PLFOj99jQCf9rRw9Y.gilQ6/86.bleGw4MphmFaMw.DNphEaa'),
 (2, '2025-05-20 08:26:15', 'admin', 'admin@admin.com', 'admin', '$2y$12$4Oo9PLFOj99jQCf9rRw9Y.gilQ6/86.bleGw4MphmFaMw.DNphEaa'),
-(3, '2025-05-20 06:27:23', 'Vendedor cambio', 'vendedor1@gmail.com', 'dos', '$2y$12$/yoNqcIia8dDvqel/bidhu1ZJWq/BlmW6SvQyVmqw9uul/LRPzSha'),
+(3, '2025-05-20 06:27:23', 'vendedor', 'vendedor@gmail.com', 'dos', '$2y$12$qlKA.sYC6asZzzSZvGEv6.8SSpgMy.F6PjNmskWps8Q5.mEk.XehS'),
 (4, '2025-05-20 06:34:23', 'Toni Cerrajero', 'vendedor2@gmail.com', 'Carril', '$2y$12$4HuFtIrg8MFEhQgi6JGZgu7KuEeYluANr30wFcX4jGgv9b2AfHGMK'),
 (5, '2025-05-20 06:44:41', 'Vendedor 3', 'vendedor3@gmail.com', 'tres', '$2y$12$NrEONAFmaGut0MLd3O5GLesCUECiVpbv5p9Nt9tOehjG7aLnxKXMS'),
 (6, '2025-06-03 05:21:24', 'Vendedor 4', 'vendedor4@gmail.com', 'cuatro', '$2y$12$7z87BhVtoMqNWEPJQ6.fy.qOtzfrFqips9uuEDcmsc7GPh/83k3X.'),
@@ -336,6 +365,12 @@ ALTER TABLE `comprador`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `descuento`
+--
+ALTER TABLE `descuento`
+  ADD PRIMARY KEY (`codigo`);
+
+--
 -- Indices de la tabla `dueno`
 --
 ALTER TABLE `dueno`
@@ -354,7 +389,8 @@ ALTER TABLE `elemento`
 --
 ALTER TABLE `pedido`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `usuario` (`usuario`);
+  ADD KEY `usuario` (`usuario`),
+  ADD KEY `tienda_pedido_tienda` (`tienda`);
 
 --
 -- Indices de la tabla `post`
@@ -423,7 +459,7 @@ ALTER TABLE `elemento`
 -- AUTO_INCREMENT de la tabla `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `post`
@@ -482,7 +518,8 @@ ALTER TABLE `elemento`
 -- Filtros para la tabla `pedido`
 --
 ALTER TABLE `pedido`
-  ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`usuario`) REFERENCES `comprador` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`usuario`) REFERENCES `comprador` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `tienda_pedido_tienda` FOREIGN KEY (`tienda`) REFERENCES `tienda` (`id`);
 
 --
 -- Filtros para la tabla `post`
