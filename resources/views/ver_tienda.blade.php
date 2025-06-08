@@ -36,9 +36,11 @@
             <h2 class="text-lg font-semibold mb-2">Mejores productos / Servicios</h2>
             <div class="flex space-x-4 overflow-x-auto bg-gray-200 rounded-lg p-4">
                 @for($i = 0; $i < count($productos); $i++)
-                    <a href="{{ '/producto/' . $tienda->nombre . '/' . $productos[$i]->id }}"
-                        class="min-w-[120px] shadow h-32 bg-[url('{{ asset($productos[$i]->imagen) }}')] bg-cover bg-center rounded-lg flex items-center justify-center text-white font-bold text-lg">
-                        <span class="text-black bg-amber-100">{{ str_replace('_', ' ', $productos[$i]->nombre) }}</span>
+                    <a href="{{ '/producto/' . $tienda->nombre . '/' . $productos[$i]->id }}" class="min-w-[120px] shadow h-32  rounded-lg flex items-center justify-center text-white font-bold text-lg flex-col bg-gray-300 hover:bg-gray-400 transition duration-300 transform hover:scale-105">
+                        <div class="w-full h-full overflow-hidden rounded-t-lg">
+                            <img class="w-full h-full object-cover" src="{{ asset($productos[$i]->imagen) }}" alt="">
+                        </div>
+                        <span class="text-black ">{{ str_replace('_', ' ', $productos[$i]->nombre) }}</span>
                     </a>
                 @endfor
             </div>
@@ -49,7 +51,7 @@
                 <h2 class="text-lg font-semibold mb-4">Blog</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 bg-gray-200 rounded-lg p-4">
                     @for($i = 0; $i < count($posts); $i++)
-                        <a href="{{ '/blog/' . $posts[$i]->id }}" class="bg-gray-500 rounded-lg p-3 flex flex-col">
+                        <a href="{{ '/blog/' . $posts[$i]->id }}" class="bg-gray-500 rounded-lg p-3 flex flex-col transition duration-300 hover:scale-105">
                             <div class="w-full h-24 bg-gray-400 rounded mb-2">
                                 <img src="{{ asset($posts[$i]->imagen) }}" alt="{{ $posts[$i]->titulo }}"
                                     class="w-full h-full object-cover rounded">

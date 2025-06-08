@@ -81,9 +81,13 @@
                     <div class="flex gap-4 min-w-max flex-col md:flex-row">
                         @foreach ($otros_productos as $producto)
                             <a href="{{ asset('/producto/' . $producto->nombre . '/' . $producto->id) }}"
-                                class="flex justify-center items-center md:w-1/5 h-32 bg-cover bg-center bg-[url({{ asset($producto->imagen) }})]">
+                                class="flex justify-center items-center md:w-1/5 h-32 flex-col bg-gray-300 hover:bg-gray-400 transition duration-300 transform hover:scale-105 shadow-lg rounded-lg">
+                                <div class="w-full h-full overflow-hidden rounded-lg shadow-lg mb-2">
+                                    <img src="{{ asset($producto->imagen) }}" alt="{{ $producto->nombre }}"
+                                        class="w-full h-full object-cover rounded-t-lg">
+                                </div>
                                 <span
-                                    class="text-white font-bold transition-transform duration-300 hover:scale-105 bg-[#EEC643] p-2 rounded-3xl text-center">{{str_replace('_',' ',$producto->nombre)}}</span>
+                                    class="font-bold transition-transform duration-300 hover:scale-105 p-2 rounded-3xl text-center">{{str_replace('_',' ',$producto->nombre)}}</span>
                             </a>
 
                         @endforeach
