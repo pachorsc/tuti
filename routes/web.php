@@ -338,6 +338,9 @@ Route::get('/usuario', function () {
     if (Cookie::get('usuario') == null) {
         return redirect()->route('entrar');
     }
+    if (Cookie::get('usuario') == 'admin@admin.com') {
+        return redirect()->route('admin.admin');
+    }
     // Obtener el ID del usuario desde la cookie
     $id_usuario = Cookie::get('id_usuario');
     //traemos nombre, apellido, correo   y si es un comprador traemos 
