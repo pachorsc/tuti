@@ -25,3 +25,9 @@
    ```bash
    git clone https://github.com/tuusuario/tuti3.git
    cd tuti
+
+## Licencia
+Este proyecto está bajo la licencia MIT.
+---
+## Contacto
+Para dudas o sugerencias, utiliza el formulario de contacto en la web o escribe a pachoweb@pachoweb.es.
