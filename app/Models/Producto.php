@@ -71,7 +71,6 @@ class Producto extends Model
             ->whereIn('tienda.id', $tiendas)
             ->where('elemento.precio_descuento', '>', 0) // Filtrar productos con descuento
             ->inRandomOrder() // Orden aleatorio
-            ->orderBy('elemento.calificacion', 'desc') // Ordenar por calificación
             ->get();
             
         return $productos;

@@ -59,7 +59,7 @@ Route::post('/vendedor/update_elemento/{id}', [vendedor_controller::class, 'upda
     ->name('update_elemento');
 
 Route::match(['get', 'post'], '/vendedor/{action}', function ($action, Request $request) {
-    // Verificar si el usuario es admin
+    // Verificar si el usuario es vendedor
     if (Cookie::get('vendedor') !== 'true') {
         return redirect()->route('inicio');
     }
@@ -69,7 +69,7 @@ Route::match(['get', 'post'], '/vendedor/{action}', function ($action, Request $
         return app()->call([$controller, $action], ['request' => $request]);
     }
     abort(404);
-})->name('admin_action');
+})->name('vendedor_action');
 
 
 Route::get('/nosotros', function () {

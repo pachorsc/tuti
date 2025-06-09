@@ -1,5 +1,5 @@
 
-<header class="bg-[#247BA0] px-5 py-3 flex items-center justify-between h-[10vh] overflow-hidden">
+<header class="bg-[#247BA0] px-5 py-5 flex items-center justify-between min-h-[10vh] overflow-hidden">
     <div class="flex items-center gap-4">
         <a href="/">
             <img src="{{ asset('images/logo.svg') }}" alt="Logo" class="max-w-[100px] min-w-[70px] w-[10vw] rounded-full object-cover">
