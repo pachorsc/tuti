@@ -34,3 +34,6 @@ Este proyecto está bajo la licencia MIT.
 ## Contacto
 
 Para dudas o sugerencias, utiliza el formulario de contacto en la web o escribe a pachoweb@pachoweb.es.
+
+## Usar la página
+actuelmente la pagina se encuentra hosteada en pachoweb.es
